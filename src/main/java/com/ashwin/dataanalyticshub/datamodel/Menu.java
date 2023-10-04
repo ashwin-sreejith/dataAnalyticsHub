@@ -1,6 +1,6 @@
 package com.ashwin.dataanalyticshub.datamodel;
 
-import com.example.socialmediaanalyzer.CustomExceptions.*;
+import com.ashwin.dataanalyticshub.datamodel.customexceptions.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

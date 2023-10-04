@@ -1,9 +1,9 @@
 package com.ashwin.dataanalyticshub.datamodel.unittests;
 
-import com.example.socialmediaanalyzer.CustomExceptions.PostCollectionEmptyException;
-import com.example.socialmediaanalyzer.CustomExceptions.PostNotFoundException;
-import com.example.socialmediaanalyzer.SocialMediaOperations;
-import com.example.socialmediaanalyzer.SocialMediaPost;
+import com.ashwin.dataanalyticshub.datamodel.SocialMediaOperations;
+import com.ashwin.dataanalyticshub.datamodel.SocialMediaPost;
+import com.ashwin.dataanalyticshub.datamodel.customexceptions.PostCollectionEmptyException;
+import com.ashwin.dataanalyticshub.datamodel.customexceptions.PostNotFoundException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

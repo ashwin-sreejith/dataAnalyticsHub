@@ -1,7 +1,7 @@
 package com.ashwin.dataanalyticshub.datamodel;
 
-import com.example.socialmediaanalyzer.CustomExceptions.PostCollectionEmptyException;
-import com.example.socialmediaanalyzer.CustomExceptions.PostNotFoundException;
+import com.ashwin.dataanalyticshub.datamodel.customexceptions.PostCollectionEmptyException;
+import com.ashwin.dataanalyticshub.datamodel.customexceptions.PostNotFoundException;
 import org.junit.jupiter.api.function.Executable;
 
 import java.time.LocalDateTime;

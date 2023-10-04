@@ -1,6 +1,6 @@
 package com.ashwin.dataanalyticshub.datamodel.unittests;
 
-import com.example.socialmediaanalyzer.Util;
+import com.ashwin.dataanalyticshub.datamodel.Util;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

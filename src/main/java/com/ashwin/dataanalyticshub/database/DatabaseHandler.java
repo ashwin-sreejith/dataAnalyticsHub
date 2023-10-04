@@ -1,7 +1,10 @@
 package com.ashwin.dataanalyticshub.database;
 
+import com.ashwin.dataanalyticshub.datamodel.SocialMediaPost;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 public class DatabaseHandler {
     private static final String DATABASE_URL = "jdbc:sqlite:database/dataHub.db";
@@ -25,22 +28,24 @@ public class DatabaseHandler {
         }
     }
 
-//    public static void insertPost(Post post) {
-//        String insertSQL = "INSERT INTO posts (author, id, content, likes, shares) VALUES (?, ?, ?, ?, ?)";
-//
-//        try (Connection connection = connect();
-//             PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
-//
-//            preparedStatement.setString(1, post.getAuthor());
-//            preparedStatement.setInt(2, post.getId());
-//            preparedStatement.setString(3, post.getContent());
-//            preparedStatement.setInt(4, post.getLikes());
-//            preparedStatement.setInt(5, post.getShares());
-//
-//            preparedStatement.executeUpdate();
-//            System.out.println("Post inserted into the database.");
-//        } catch (SQLException e) {
-//            System.err.println("Error inserting post into the database: " + e.getMessage());
-//        }
-//    }
+    public static void insertPost(SocialMediaPost post) {
+        String insertSQL = "INSERT INTO posts (id, content, userId, likes, shares, date) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection connection = connect()) {
+            assert connection != null;
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+
+                preparedStatement.setInt(1, post.getId());
+                preparedStatement.setString(2, post.getContent());
+                preparedStatement.setString(3, post.getAuthor());
+                preparedStatement.setInt(4, post.getLikes());
+                preparedStatement.setInt(5, post.getShares());
+
+                preparedStatement.executeUpdate();
+                System.out.println("Post inserted into the database.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error inserting post into the database: " + e.getMessage());
+        }
+    }
 }
