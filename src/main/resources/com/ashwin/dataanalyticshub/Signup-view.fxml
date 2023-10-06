@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<GridPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.ashwin.dataanalyticshub.LoginController"
+          alignment="CENTER" hgap="30" vgap="10" gridLinesVisible="false">
+
+  <Label text="Data Analytics Hub" style="-fx-font-weight: bold; font-size: 30px;" GridPane.columnSpan="2" GridPane.rowIndex="0"/>
+
+  <Label text="Username:" style="-fx-font-size: 14px;" GridPane.rowIndex="1"/>
+  <TextField fx:id="usernameField" promptText="Username" style="-fx-font-size: 14px;" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+
+  <Label text="Password:" style="-fx-font-size: 14px;" GridPane.rowIndex="3" />
+  <PasswordField fx:id="passwordField" promptText="Password" style="-fx-font-size: 14px;" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+
+  <Button text="Login" onAction="#handleLogin" style="-fx-font-size: 14px;" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+
+  <Label fx:id="loginStatusLabel" text="" style="-fx-font-size: 14px; -fx-text-fill: red;" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+
+  <Button text="Signup" onAction="#switchSignup" style="-fx-font-size: 14px;" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+
+</GridPane>
