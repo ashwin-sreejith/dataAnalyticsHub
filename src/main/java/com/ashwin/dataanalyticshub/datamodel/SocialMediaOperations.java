@@ -76,9 +76,14 @@ public class SocialMediaOperations {
         String dateTime = postDetails.get("dateTime");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HH:mm");
         LocalDateTime date = LocalDateTime.parse(dateTime, formatter);
-        System.out.println(date);
         SocialMediaPost newPost = new SocialMediaPost(postId, content, author, likes, shares, date);
-        DatabaseHandler.insertPost(newPost);
+        int errorCode = DatabaseHandler.insertPost(newPost);
+        if(errorCode == 19) {
+            return "Post Id Already Exists!";
+        } else if (errorCode == -1) {
+            return "Something Went Wrong! Contact Admin!";
+        }
+
         return "Success";
 
     }

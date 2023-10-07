@@ -2,10 +2,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.scene.text.Text?>
 <GridPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.ashwin.dataanalyticshub.LoginController"
-          alignment="CENTER" hgap="30" vgap="15" gridLinesVisible="false">
+          alignment="CENTER" hgap="30" vgap="15">
 
   <HBox GridPane.rowIndex="0" alignment="CENTER">
     <Label text="SIGN UP" style="-fx-font-weight: bold; font-size: 30px;"/>
@@ -26,7 +25,7 @@
 
 
 
-  <Label fx:id="loginStatusLabel" text="" style="-fx-font-size: 14px; -fx-text-fill: red;" GridPane.columnSpan="2" GridPane.rowIndex="11" />
+  <Label fx:id="loginStatusLabel" style="-fx-font-size: 14px; -fx-text-fill: red;" GridPane.columnSpan="2" GridPane.rowIndex="11" />
 
   <Button text="Signup" onAction="#handleSignup" style="-fx-font-size: 14px;" GridPane.rowIndex="9" GridPane.columnIndex="0" prefWidth="200"/>
 

@@ -28,7 +28,7 @@ public class DatabaseHandler {
         }
     }
 
-    public static void insertPost(SocialMediaPost post) {
+    public static int insertPost(SocialMediaPost post) {
         String insertSQL = "INSERT INTO postCollection (id, content, userId, likes, shares, date) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = connect()) {
@@ -43,16 +43,24 @@ public class DatabaseHandler {
                 LocalDateTime dateTime = post.getDateTime();
                 String formattedDate = Util.dateFormatterFunc(dateTime);
                 preparedStatement.setString(6, formattedDate);
-
                 preparedStatement.executeUpdate();
                 System.out.println("Post inserted into the database.");
+                return 200;
+            } catch (SQLException e) {
+                if (e.getErrorCode() == 19) {
+                    System.err.println("Post with the same ID already exists.");
+                    return 19;
+                } else {
+                    System.err.println("Error inserting post into the database: " + e.getMessage());
+                }
             }
         } catch (SQLException e) {
             System.err.println("Error inserting post into the database: " + e.getMessage());
         }
+        return -1;
     }
 
-    public static void insertUser(String firstName, String lastName, String username, String password) {
+    public static int insertUser(String firstName, String lastName, String username, String password) {
         try (Connection connection = connect();
              PreparedStatement preparedStatement = connection.prepareStatement(
                      "INSERT INTO users (firstname, lastname, username, password) VALUES (?, ?, ?, ?)")) {
@@ -63,9 +71,16 @@ public class DatabaseHandler {
             preparedStatement.setString(4, password);
             preparedStatement.executeUpdate();
             System.out.println("User registered successfully.");
+            return 200;
         } catch (SQLException e) {
-            System.err.println("Error inserting user into the database: " + e.getMessage());
+            if (e.getErrorCode() == 19) {
+                System.err.println("Username already exists.");
+                return 19;
+            } else {
+                System.err.println("Error inserting user into the database: " + e.getMessage());
+            }
         }
+        return -1;
     }
 
     public static String getFullNameByUsername(String username) {

@@ -118,9 +118,16 @@ public class LoginController {
             loginStatusLabel.setText("Password cannot be empty");
         } else {
             // All fields are filled, proceed with insertion
-            DatabaseHandler.insertUser(firstName, lastName, username, password);
-            loginStatusLabel.setTextFill(Color.GREEN);
-            loginStatusLabel.setText("Successful. Please Login");
+            int errorCode = DatabaseHandler.insertUser(firstName, lastName, username, password);
+            loginStatusLabel.setTextFill(Color.RED);
+            if (errorCode == 19) {
+                loginStatusLabel.setText("Username already in use");
+            } else if (errorCode == -1) {
+                loginStatusLabel.setText("Something went wrong!");
+            } else {
+                loginStatusLabel.setTextFill(Color.GREEN);
+                loginStatusLabel.setText("Successful. Please Login");
+            }
         }
 
 

@@ -8,14 +8,18 @@
 <?import javafx.scene.control.TableColumn?>
 <GridPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:id="retrievePost" alignment="CENTER"
           fx:controller="com.ashwin.dataanalyticshub.retrievePostController"
-          hgap="10" vgap="25" style="-fx-border-color: blue" gridLinesVisible="false">
+          hgap="10" vgap="10" style="-fx-border-color: blue" gridLinesVisible="false">
 
     <Label text="Retrieve Post" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
     <Label text="Post Id" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-    <TextField fx:id="postId" promptText="Enter Post ID to retrieve" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-    <Button onAction="#handleRetrieval" GridPane.columnIndex="1" GridPane.rowIndex="2" text="Retrieve"/>
+    <HBox GridPane.columnIndex="0" GridPane.rowIndex="2" spacing="12">
+        <TextField fx:id="postId" promptText="Enter Post ID to retrieve"
+                    maxWidth="200"/>
+        <Button onAction="#handleRetrieval" text="Retrieve"/>
+    </HBox>
     <Label fx:id="userMessage" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2"/>
-    <Button GridPane.halignment="RIGHT" fx:id="saveButton" onAction="#handleSave" GridPane.columnIndex="0" GridPane.rowIndex="4" text="Save to .csv"/>
+    <Button GridPane.halignment="RIGHT" fx:id="saveButton" onAction="#handleSave" GridPane.columnIndex="0"
+            GridPane.rowIndex="4" text="Save to .csv"/>
     <TableView fx:id="postTable" prefWidth="1000" GridPane.rowIndex="5">
         <columns>
             <TableColumn text="Post ID" fx:id="idCol"/>
