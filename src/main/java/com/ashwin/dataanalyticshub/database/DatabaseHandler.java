@@ -48,4 +48,22 @@ public class DatabaseHandler {
             System.err.println("Error inserting post into the database: " + e.getMessage());
         }
     }
+
+    public static void insertUser(String firstName, String lastName, String username, String password) {
+        try (Connection connection = connect();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "INSERT INTO users (firstname, lastname, username, password) VALUES (?, ?, ?, ?)")) {
+
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setString(3, username);
+            preparedStatement.setString(4, password);
+            preparedStatement.executeUpdate();
+            System.out.println("User registered successfully.");
+        } catch (SQLException e) {
+            System.err.println("Error inserting user into the database: " + e.getMessage());
+        }
+    }
+
+
 }

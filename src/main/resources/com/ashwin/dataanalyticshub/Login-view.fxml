@@ -1,16 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<GridPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.ashwin.dataanalyticshub.LoginController"
+          alignment="CENTER" hgap="30" vgap="15" gridLinesVisible="false">
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.ashwin.dataanalyticshub.HelloController">
-  <padding>
-    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-  </padding>
+  <HBox GridPane.rowIndex="0" alignment="CENTER">
+    <Label text="LOGIN" style="-fx-font-weight: bold; font-size: 60px;"/>
+  </HBox>
 
-  <Label fx:id="welcomeText"/>
-  <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+
+  <Label text="Username:" style="-fx-font-size: 14px;" GridPane.rowIndex="1"/>
+  <TextField fx:id="userNameField" promptText="Username" style="-fx-font-size: 14px;" GridPane.columnIndex="0"
+             GridPane.rowIndex="2" />
+
+  <Label text="Password:" style="-fx-font-size: 14px;" GridPane.rowIndex="3" />
+  <PasswordField fx:id="passwordField" promptText="Password" style="-fx-font-size: 14px;" GridPane.columnIndex="0"
+                 GridPane.rowIndex="4" />
+
+  <Button text="Login" onAction="#handleLogin" style="-fx-font-size: 14px;-fx-cursor: hand;" GridPane.rowIndex="5"
+          GridPane.columnIndex="0"/>
+
+  <HBox GridPane.rowIndex="6" alignment="CENTER">
+    <Label text="Not a member?" style="-fx-font-size: 14px; -fx-text-fill: #343434;"/>
+    <Button text="Signup" onAction="#switchSignup" style="-fx-font-size: 14px; -fx-background-color: transparent;
+                          -fx-cursor: hand; -fx-text-fill: blue"/>
+  </HBox>
+
+  <Label fx:id="loginStatusLabel" text="" style="-fx-font-size: 14px; -fx-text-fill: red;" GridPane.columnSpan="2"
+         GridPane.rowIndex="7" />
+
+</GridPane>
