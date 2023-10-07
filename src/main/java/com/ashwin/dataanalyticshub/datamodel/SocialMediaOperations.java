@@ -1,10 +1,13 @@
 package com.ashwin.dataanalyticshub.datamodel;
 
+import com.ashwin.dataanalyticshub.database.DatabaseHandler;
 import com.ashwin.dataanalyticshub.datamodel.customexceptions.PostCollectionEmptyException;
 import com.ashwin.dataanalyticshub.datamodel.customexceptions.PostNotFoundException;
 import org.junit.jupiter.api.function.Executable;
 
+import javax.xml.validation.Validator;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 // handles all operations that can be performed using posts
@@ -38,20 +41,45 @@ public class SocialMediaOperations {
     }
 
     // adds new posts to the collection
-    public void addNewPost(HashMap<String, Object> postDetails, boolean batch) {
-        int postId = (int) postDetails.get("postId");
+    public String addNewPost(HashMap<String, String> postDetails) {
+        String validation = validator(postDetails);
+
+        if(validation.equals("IDError")) {
+            return "Id has to be a non-zero Integer.";
+        }
+
+        if(validation.equals("ContentError")) {
+            return "Content cannot be empty.";
+        }
+
+        if(validation.equals("AuthorError")) {
+            return "Invalid username! Contact Admin.";
+        }
+
+        if(validation.equals("LikesError")) {
+            return "Like has to be a whole number.";
+        }
+
+        if(validation.equals("SharesError")) {
+            return "Shares has to be a whole number.";
+        }
+
+        if(validation.equals("DateTimeError")) {
+            return "Invalid DateTime! Contact Admin.";
+        }
+
+        int postId = Integer.parseInt(postDetails.get("postId"));
         String content = (String) postDetails.get("content");
         String author = (String) postDetails.get("author");
-        int likes = (int) postDetails.get("likes");
-        int shares = (int) postDetails.get("shares");
-        LocalDateTime dateTime = (LocalDateTime) postDetails.get("dateTime");
+        int likes = Integer.parseInt(postDetails.get("likes"));
+        int shares = Integer.parseInt(postDetails.get("shares"));
+        String dateTime = postDetails.get("dateTime");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HH:mm");
+        LocalDateTime date = LocalDateTime.parse(dateTime, formatter);
+        SocialMediaPost newPost = new SocialMediaPost(postId, content, author, likes, shares, date);
+        DatabaseHandler.insertPost(newPost);
+        return "Success";
 
-        SocialMediaPost newPost = new SocialMediaPost(postId, content, author, likes, shares, dateTime);
-        this.postCollection.put(postId, newPost);
-
-        if (!batch) {
-            System.out.println("The post has been added to the collection!");
-        }
     }
 
     // deletes a post with the given post ID if it exists and collection not empty
@@ -162,6 +190,41 @@ public class SocialMediaOperations {
        }
         System.out.println(boundary);
         System.out.println();
+    }
+
+    public String validator(HashMap<String, String> postDetails) {
+        String id = postDetails.get("postId");
+        String content = postDetails.get("content");
+        String author = postDetails.get("author");
+        String likes = postDetails.get("likes");
+        String shares = postDetails.get("shares");
+        String date = postDetails.get("dateTime");
+
+        if(!Util.isValidInteger(id, false)) {
+            return "IDError";
+        }
+
+        if(!Util.isValidString(content)) {
+            return "ContentError";
+        }
+
+        if(!Util.isValidString(author)) {
+            return "AuthorError";
+        }
+
+        if(!Util.isValidInteger(likes, true)) {
+            return "LikesError";
+        }
+
+        if(!Util.isValidInteger(shares, true)) {
+            return "SharesError";
+        }
+
+        if(!Util.isValidDateTime(date)) {
+            return "DateTimeError";
+        }
+
+        return "200";
     }
 
 }

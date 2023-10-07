@@ -53,7 +53,7 @@ public class Menu {
                         retrieveAndValidateLikesAndShares(true);
                         retrieveAndValidateLikesAndShares(false);
                         retrieveAndValidateDateTime();
-                        operations.addNewPost(postDetails, false);
+                        //operations.addNewPost(postDetails);
                     }
                     case "2" -> {
                         // delete post
