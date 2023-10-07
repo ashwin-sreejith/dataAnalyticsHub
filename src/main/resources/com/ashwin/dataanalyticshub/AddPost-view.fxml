@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:id="addPostForm" alignment="CENTER"
+          fx:controller="com.ashwin.dataanalyticshub.AddPostController"
+          hgap="10" vgap="25" gridLinesVisible="false" style="-fx-border-color: blue">
+    <Label text="Add Post" style="-fx-font-size: 14px;" GridPane.rowIndex="0"/>
+    <Label text="Post ID" style="-fx-font-size: 14px" GridPane.rowIndex="1"/>
+    <TextField fx:id="postIDField" promptText="Post ID" style="-fx-font-size: 14px;"
+               GridPane.columnIndex="0" GridPane.rowIndex="2" />
+
+    <Label text="Content:" style="-fx-font-size: 14px;" GridPane.rowIndex="3" />
+    <TextField fx:id="contentField" promptText="Content" style="-fx-font-size: 14px;"
+               GridPane.columnIndex="0"
+               GridPane.rowIndex="4" />
+
+    <Label text="Likes" style="-fx-font-size: 14px;" GridPane.rowIndex="5" />
+    <TextField fx:id="likesField" promptText="Content" style="-fx-font-size: 14px;"
+               GridPane.columnIndex="0"
+               GridPane.rowIndex="6" />
+
+    <Label text="Shares" style="-fx-font-size: 14px;" GridPane.rowIndex="7" />
+    <TextField fx:id="sharesField" promptText="Content" style="-fx-font-size: 14px;"
+               GridPane.columnIndex="0"
+               GridPane.rowIndex="8" />
+
+    <Label text="Date" style="-fx-font-size: 14px;" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+    <Label text="Hours" style="-fx-font-size: 14px;" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
+    <Label text="Minutes" style="-fx-font-size: 14px;" GridPane.rowIndex="9" GridPane.columnIndex="3"/>
+    <DatePicker fx:id="dateField" GridPane.rowIndex="10" GridPane.columnIndex="0" editable="false"/>
+    <Spinner fx:id="spinnerHour" GridPane.rowIndex="10" GridPane.columnIndex="1" min="00" max="23" prefWidth="60"/>
+    <Label text=":" GridPane.columnIndex="2" GridPane.rowIndex="10"/>
+    <Spinner fx:id="spinnerMinutes" GridPane.rowIndex="10" GridPane.columnIndex="3" min="00" max="59" prefWidth="60"/>
+
+
+    <Button text="Add Post" onAction="#handleAddPost" style="-fx-font-size: 14px;-fx-cursor: hand;"
+            GridPane.rowIndex="11"
+            GridPane.columnIndex="0" prefWidth="200"/>
+
+    <Label fx:id="userMessage" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="12"
+           text=""/>
+
+</GridPane>
