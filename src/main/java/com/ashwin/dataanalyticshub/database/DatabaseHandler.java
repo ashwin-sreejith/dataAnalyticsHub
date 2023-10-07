@@ -2,10 +2,8 @@ package com.ashwin.dataanalyticshub.database;
 
 import com.ashwin.dataanalyticshub.datamodel.SocialMediaPost;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+
 public class DatabaseHandler {
     private static final String DATABASE_URL = "jdbc:sqlite:database/dataHub.db";
 
@@ -63,6 +61,35 @@ public class DatabaseHandler {
         } catch (SQLException e) {
             System.err.println("Error inserting user into the database: " + e.getMessage());
         }
+    }
+
+    public static String getFullNameByUsername(String username) {
+        String fullName = null;
+        Connection connection = connect();
+
+        if (connection != null) {
+            try {
+                String query = "SELECT firstname, lastname FROM users WHERE username=?";
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, username);
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    String firstName = resultSet.getString("firstname");
+                    String lastName = resultSet.getString("lastname");
+                    fullName = firstName + " " + lastName;
+                }
+
+                resultSet.close();
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                disconnect(connection);
+            }
+        }
+
+        return fullName;
     }
 
 

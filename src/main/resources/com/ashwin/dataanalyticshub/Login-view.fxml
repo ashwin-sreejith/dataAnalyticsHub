@@ -21,7 +21,7 @@
                  GridPane.rowIndex="4" />
 
   <Button text="Login" onAction="#handleLogin" style="-fx-font-size: 14px;-fx-cursor: hand;" GridPane.rowIndex="5"
-          GridPane.columnIndex="0"/>
+          GridPane.columnIndex="0" prefWidth="200"/>
 
   <HBox GridPane.rowIndex="6" alignment="CENTER">
     <Label text="Not a member?" style="-fx-font-size: 14px; -fx-text-fill: #343434;"/>

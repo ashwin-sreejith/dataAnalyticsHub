@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.ashwin.dataanalyticshub.DashboardController">
+    <top>
+        <HBox style="-fx-background-color: #343333">
+            <padding>
+                <Insets left="30" top="40" right="42" bottom="30"/>
+            </padding>
+            <Label text="Dashboard"
+                   style="-fx-text-fill: #e2dfdf; -fx-font-size: 35; -fx-font: Arial; -fx-font-weight: bold;"/>
+            <Region HBox.hgrow="ALWAYS" />
+            <MenuButton text="Settings" style="-fx-text-fill: #e2dfdf; -fx-font-size: 15; -fx-font: Arial;
+            -fx-font-weight: bold; -fx-cursor: hand; -fx-background-color: transparent">
+                <items>
+                    <MenuItem text="Account Settings" />
+                    <MenuItem text="Logout" />
+                </items>
+            </MenuButton>
+        </HBox>
+    </top>
+    <center>
+        <HBox>
+            <padding>
+                <Insets left="30" top="10" right="30" bottom="10"/>
+            </padding>
+            <Label fx:id="userLabel" text="" style="-fx-text-fill: #d01818; -fx-font-size: 40"/>
+        </HBox>
+    </center>
+    <left>
+        <ListView fx:id="postOperations">
+            <HBox>
+                <Label text="Add Post"/>
+            </HBox>
+            <HBox>
+                <Label text="Delete Post"/>
+            </HBox>
+            <HBox>
+                <Label text="Retrieve Post"/>
+            </HBox>
+        </ListView>
+    </left>
+</BorderPane>

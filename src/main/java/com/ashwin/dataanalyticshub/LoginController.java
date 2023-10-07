@@ -21,6 +21,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class LoginController {
     @FXML
@@ -38,10 +39,19 @@ public class LoginController {
 
     private void loadFXML(String fxmlPath) {
         try {
+
+            float width = 800;
+            float height = 800;
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
-            Scene scene = new Scene(root, 800, 800);
-
+            if (Objects.equals(fxmlPath, "Dashboard-view.fxml")){
+                DashboardController controller = loader.getController();
+                controller.setWelcomeMessage(String.valueOf(userNameField.getText()));
+                width = 1800;
+                height = 1200;
+            }
+            Scene scene = new Scene(root, width, height);
             Stage stage = (Stage) ((Node) userNameField).getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Data Analytics Hub");
@@ -75,6 +85,7 @@ public class LoginController {
                 // Successful login
                 loginStatusLabel.setTextFill(Color.GREEN);
                 loginStatusLabel.setText("Login successful!");
+                switchDashboard();
             } else {
                 // Invalid credentials
                 loginStatusLabel.setTextFill(Color.RED);
@@ -125,4 +136,10 @@ public class LoginController {
         // Load the LoginView.fxml
         loadFXML("Login-view.fxml");
     }
+
+    public void switchDashboard() {
+        // Load the LoginView.fxml
+        loadFXML("Dashboard-view.fxml");
+    }
+
 }
