@@ -38,10 +38,10 @@
                 <padding>
                     <Insets top="5" bottom="5"/>
                 </padding>
-                <Button text="Home" fx:id="homeButton" onAction="#loadAllPostScene" />
-                <Button text="Add Post +" fx:id="addButton" onAction="#loadAddPostScene"/>
+                <Button text="Home" onAction="#loadAllPostScene" />
+                <Button text="Add Post +" onAction="#loadAddPostScene"/>
                 <Button text="Delete Post -"/>
-                <Button text="Retrieve Post"/>
+                <Button text="Retrieve Post" onAction="#loadRetrieval"/>
                 <Button text="Top N"/>
             </HBox>
             <VBox fx:id="dynamicWindow"/>

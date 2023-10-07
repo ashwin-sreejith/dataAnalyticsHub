@@ -1,4 +1,5 @@
 package com.ashwin.dataanalyticshub.datamodel;
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 // handles basic structure of a post
@@ -18,6 +19,7 @@ public class SocialMediaPost {
         this.shares = shares;
         this.dateTime = dateTime;
     }
+
 
     public int getId() {
         return id;

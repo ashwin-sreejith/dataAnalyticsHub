@@ -69,13 +69,14 @@ public class SocialMediaOperations {
         }
 
         int postId = Integer.parseInt(postDetails.get("postId"));
-        String content = (String) postDetails.get("content");
-        String author = (String) postDetails.get("author");
+        String content = postDetails.get("content");
+        String author = postDetails.get("author");
         int likes = Integer.parseInt(postDetails.get("likes"));
         int shares = Integer.parseInt(postDetails.get("shares"));
         String dateTime = postDetails.get("dateTime");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HH:mm");
         LocalDateTime date = LocalDateTime.parse(dateTime, formatter);
+        System.out.println(date);
         SocialMediaPost newPost = new SocialMediaPost(postId, content, author, likes, shares, date);
         DatabaseHandler.insertPost(newPost);
         return "Success";
@@ -96,27 +97,18 @@ public class SocialMediaOperations {
     }
 
     // retrieves a post with its post ID if it exists and collection not empty
-    public Executable retrievePost(int postId) throws PostNotFoundException, PostCollectionEmptyException {
-        if (postCollection.isEmpty()) {
-            throw new PostCollectionEmptyException("Post collection empty! Please add posts first!");
+    public SocialMediaPost retrievePost(String postId) {
+        if(!Util.isValidInteger(postId, false)){
+            return null;
         }
 
-        SocialMediaPost post = postCollection.get(postId);
-        if (post == null) {
-            throw new PostNotFoundException("Sorry the post does not exist in the collection!");
+        SocialMediaPost post = DatabaseHandler.retrievePostById(Integer.parseInt(postId));
+
+        if(post == null) {
+            return null;
         }
+        return post;
 
-        String boundary = "+--------+-------------------------------------------------------------------------------" +
-                "---+----------+-------+--------+------------------+";
-        String columnHeader = "|\u001B[34;1m   ID   \u001B[0m|\u001B[34;1m Content                                   " +
-                "                                       \u001B[0m|\u001B[34;1m Author   \u001B[0m|\u001B[34;1m Likes " +
-                "\u001B[0m|\u001B[34;1m Shares \u001B[0m|\u001B[34;1m Date and Time    \u001B[0m|";
-        System.out.println(boundary);
-        System.out.println(columnHeader);
-        System.out.println(post);
-        System.out.println(boundary);
-
-        return null;
     }
 
     // sorts the post by given comparator and invokes the method that prints the results

@@ -9,24 +9,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 public class DashboardController {
-    @FXML
-    public TextField postIDField;
-    public TextField contentField;
-    public TextField likesField;
-    public TextField sharesField;
-    public GridPane addPostForm;
-    public Button addButton;
-    public DatePicker dateField;
-    @FXML
-    public Label userMessage;
-    @FXML
-    public Spinner spinnerHour;
-    @FXML
-    public Spinner spinnerMinutes;
+
     public VBox dynamicWindow;
+
     @FXML
     private Label userLabel;
 
@@ -37,9 +24,6 @@ public class DashboardController {
     private TableView<?> postTableView;
 
     private String userName;
-
-//    private HashMap<String, String> postDetails;
-
 
 
     @FXML
@@ -61,6 +45,8 @@ public class DashboardController {
     public void loadAllPostScene() {
         loadChildFXML("AllPost-view.fxml");
     }
+
+    public void loadRetrieval(){ loadChildFXML("RetrievePost-view.fxml"); }
 
     private void loadChildFXML(String fxmlFileName) {
         try {

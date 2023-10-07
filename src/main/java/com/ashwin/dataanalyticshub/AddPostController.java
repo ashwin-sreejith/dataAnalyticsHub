@@ -52,7 +52,6 @@ public class AddPostController {
             DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
             LocalDateTime parsedDateTime = LocalDateTime.parse(dateTime, inputFormatter);
             DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-
             formattedDateTime = parsedDateTime.format(outputFormatter);
         } catch (DateTimeParseException e) {
             userMessage.setText("Invalid Date");

@@ -6,5 +6,6 @@ module com.example.dataanalyticshub {
 
 
     opens com.ashwin.dataanalyticshub to javafx.fxml;
+    opens com.ashwin.dataanalyticshub.datamodel to javafx.base;
     exports com.ashwin.dataanalyticshub;
 }

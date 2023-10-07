@@ -1,5 +1,8 @@
 package com.ashwin.dataanalyticshub.datamodel;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -63,4 +66,39 @@ public class Util {
                 isValidInteger(values[4], true) &&
                 isValidDateTime(values[5]);
     }
+
+
+    public static String dateFormatterFunc(LocalDateTime dateString) {
+
+        // Parse the input date string
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+        Date parsedDate = null;
+        try {
+            parsedDate = inputFormat.parse(String.valueOf(dateString));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        // Format the parsed date to the desired SQL date format
+        SimpleDateFormat sqlDateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = sqlDateFormatter.format(parsedDate);
+
+        System.out.println("Formatted date for SQL: " + formattedDate);
+        return formattedDate;
+    }
+
+    public static LocalDateTime localDateTimeFormatFunc(String dateString) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime dateTime = null;
+        try {
+            dateTime = LocalDateTime.parse(dateString, formatter);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        
+
+        return dateTime;
+    }
+
 }

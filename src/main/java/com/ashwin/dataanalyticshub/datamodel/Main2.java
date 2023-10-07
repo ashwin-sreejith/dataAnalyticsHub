@@ -13,7 +13,7 @@ public class Main2 {
         // set to store and match unique ID
         Set<Integer> uniqueId= new HashSet<>();
         //FileHandler file = new FileHandler(path, operations, uniqueId);
-        Menu menu = new Menu(scanner, operations, uniqueId);
+        //Menu menu = new Menu(scanner, operations, uniqueId);
 
 //        try{
 //            // stores if file load failed

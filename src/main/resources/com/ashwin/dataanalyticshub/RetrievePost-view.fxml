@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<GridPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:id="retrievePost" alignment="CENTER"
+          fx:controller="com.ashwin.dataanalyticshub.retrievePostController"
+          hgap="10" vgap="25" style="-fx-border-color: blue" gridLinesVisible="false">
+
+    <Label text="Retrieve Post" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+    <Label text="Post Id" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+    <TextField fx:id="postId" promptText="Enter Post ID to retrieve" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+    <Button onAction="#handleRetrieval" GridPane.columnIndex="1" GridPane.rowIndex="2" text="Retrieve"/>
+    <Label fx:id="userMessage" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2"/>
+    <Button GridPane.halignment="RIGHT" fx:id="saveButton" onAction="#handleSave" GridPane.columnIndex="0" GridPane.rowIndex="4" text="Save to .csv"/>
+    <TableView fx:id="postTable" prefWidth="1000" GridPane.rowIndex="5">
+        <columns>
+            <TableColumn text="Post ID" fx:id="idCol"/>
+            <TableColumn text="Content" fx:id="contentCol"/>
+            <TableColumn text="Author" fx:id="authorCol"/>
+            <TableColumn text="Likes" fx:id="likesCol"/>
+            <TableColumn text="Shares" fx:id="sharesCol"/>
+            <TableColumn text="DateTime" fx:id="datesCol"/>
+        </columns>
+    </TableView>
+
+</GridPane>
