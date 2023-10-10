@@ -72,28 +72,15 @@ public class LoginController {
             return;
         }
 
-        try (Connection connection = DatabaseHandler.connect();
-             PreparedStatement preparedStatement = connection.prepareStatement(
-                     "SELECT * FROM users WHERE username = ? AND password = ?")) {
+        boolean isAuthenticated = DatabaseHandler.authenticateUser(username, password);
 
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                // Successful login
-                loginStatusLabel.setTextFill(Color.GREEN);
-                loginStatusLabel.setText("Login successful!");
-                switchDashboard();
-            } else {
-                // Invalid credentials
-                loginStatusLabel.setTextFill(Color.RED);
-                loginStatusLabel.setText("Invalid username/password");
-            }
-
-        } catch (SQLException e) {
-            loginStatusLabel.setText("Error during login: " + e.getMessage());
+        if (isAuthenticated) {
+//            loginStatusLabel.setTextFill(Color.GREEN);
+//            loginStatusLabel.setText("Login successful!");
+            switchDashboard();
+        } else {
+            loginStatusLabel.setTextFill(Color.RED);
+            loginStatusLabel.setText("Invalid username/password");
         }
     }
 
@@ -117,7 +104,6 @@ public class LoginController {
             loginStatusLabel.setTextFill(Color.RED);
             loginStatusLabel.setText("Password cannot be empty");
         } else {
-            // All fields are filled, proceed with insertion
             int errorCode = DatabaseHandler.insertUser(firstName, lastName, username, password);
             loginStatusLabel.setTextFill(Color.RED);
             if (errorCode == 19) {

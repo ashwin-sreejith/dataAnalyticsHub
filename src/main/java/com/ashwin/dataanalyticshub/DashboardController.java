@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -19,9 +18,6 @@ public class DashboardController {
 
     @FXML
     private MenuButton optionsMenu;
-
-    @FXML
-    private TableView<?> postTableView;
 
     private String userName;
 
@@ -47,6 +43,8 @@ public class DashboardController {
     }
 
     public void loadRetrieval(){ loadChildFXML("RetrievePost-view.fxml"); }
+    public void loadEditAccount(){ loadChildFXML("EditAccount-view.fxml"); }
+
 
     private void loadChildFXML(String fxmlFileName) {
         try {
@@ -56,6 +54,17 @@ public class DashboardController {
                 AddPostController controller = loader.getController();
                 controller.setUserName(this.userName);
             }
+
+            if (fxmlFileName.equals("EditAccount-view.fxml")) {
+                EditAccountController controller = loader.getController();
+                controller.setUserName(this.userName);
+            }
+
+            if (fxmlFileName.equals("RetrievePost-view.fxml")) {
+                RetrievePostController controller = loader.getController();
+                controller.setUserName(this.userName);
+            }
+
             // Clear existing content in the VBox
             dynamicWindow.getChildren().clear();
             // Set the loaded content into the VBox

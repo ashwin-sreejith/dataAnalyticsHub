@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.ashwin.dataanalyticshub.EditAccountController"
+          alignment="CENTER" hgap="30" vgap="15" fx:id="rootGridpane" gridLinesVisible="false">
+
+    <HBox GridPane.rowIndex="0" alignment="CENTER">
+        <Label text="Edit Account" style="-fx-font-weight: bold; font-size: 30px;"/>
+    </HBox>
+
+    <VBox spacing="15" fx:id="validateForm" GridPane.rowIndex="1">
+        <Label text="Username:" style="-fx-font-size: 14px;" GridPane.rowIndex="1"/>
+        <TextField fx:id="userNameField" promptText="Username" style="-fx-font-size: 14px;"
+                   GridPane.columnIndex="0" />
+
+        <Label text="Password:" style="-fx-font-size: 14px;" GridPane.rowIndex="3" />
+        <PasswordField fx:id="passwordField" promptText="Password" style="-fx-font-size: 14px;"
+                       GridPane.columnIndex="0" />
+
+        <Button text="Validate" onAction="#handleValidate" style="-fx-font-size: 14px;"
+                GridPane.columnIndex="0" prefWidth="200"/>
+
+        <Label fx:id="validateStatusLabel" style="-fx-font-size: 14px; -fx-text-fill: red;"
+               GridPane.columnSpan="2" />
+    </VBox>
+
+
+
+    <VBox fx:id="editAccountForm" GridPane.rowIndex="2" spacing="15" >
+        <Label text="First Name" style="-fx-font-size: 14px;" />
+        <TextField fx:id="firstNameField" promptText="Firstname here" style="-fx-font-size: 14px;"
+                   GridPane.columnIndex="0"  />
+
+        <Label text="Last Name" style="-fx-font-size: 14px;" />
+        <TextField fx:id="lastNameField" promptText="Lastname" style="-fx-font-size: 14px;"
+                   GridPane.columnIndex="0" />
+
+        <Label text="Username:" style="-fx-font-size: 14px;" />
+        <TextField fx:id="newUserNameField" promptText="New Username" style="-fx-font-size: 14px;"
+                   GridPane.columnIndex="0" />
+
+        <Label text="Password:" style="-fx-font-size: 14px;"  />
+        <PasswordField fx:id="newPasswordField" promptText="New Password" style="-fx-font-size: 14px;"
+                       GridPane.columnIndex="0" />
+
+
+
+        <Button text="Submit" onAction="#handleEdit" style="-fx-font-size: 14px;"
+                GridPane.columnIndex="0" prefWidth="200"/>
+
+        <Label fx:id="editStatusLabel" style="-fx-font-size: 14px; -fx-text-fill: red;"
+               GridPane.columnSpan="2"  />
+    </VBox>
+
+
+
+</GridPane>

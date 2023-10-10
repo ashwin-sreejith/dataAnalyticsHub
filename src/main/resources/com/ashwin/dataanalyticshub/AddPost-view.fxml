@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <GridPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:id="addPostForm" alignment="CENTER"
           fx:controller="com.ashwin.dataanalyticshub.AddPostController"
-          hgap="10" vgap="25" gridLinesVisible="false" style="-fx-border-color: blue">
+          hgap="10" vgap="25" style="-fx-border-color: blue">
     <Label text="Add Post" style="-fx-font-size: 14px;" GridPane.rowIndex="0"/>
     <Label text="Post ID" style="-fx-font-size: 14px" GridPane.rowIndex="1"/>
     <TextField fx:id="postIDField" promptText="Post ID" style="-fx-font-size: 14px;"
@@ -42,7 +39,6 @@
             GridPane.rowIndex="11"
             GridPane.columnIndex="0" prefWidth="200"/>
 
-    <Label fx:id="userMessage" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="12"
-           text=""/>
+    <Label fx:id="userMessage" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="12"/>
 
 </GridPane>

@@ -102,12 +102,12 @@ public class SocialMediaOperations {
     }
 
     // retrieves a post with its post ID if it exists and collection not empty
-    public SocialMediaPost retrievePost(String postId) {
+    public SocialMediaPost retrievePost(String postId, String username) {
         if(!Util.isValidInteger(postId, false)){
             return null;
         }
 
-        SocialMediaPost post = DatabaseHandler.retrievePostById(Integer.parseInt(postId));
+        SocialMediaPost post = DatabaseHandler.retrievePostById(Integer.parseInt(postId), username);
 
         if(post == null) {
             return null;

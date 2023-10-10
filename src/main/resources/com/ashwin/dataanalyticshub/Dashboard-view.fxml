@@ -16,7 +16,7 @@
             <MenuButton text="Settings" style="-fx-text-fill: #e2dfdf; -fx-font-size: 15;
             -fx-font-weight: bold; -fx-cursor: hand; -fx-background-color: transparent">
                 <items>
-                    <MenuItem text="Account Settings" />
+                    <MenuItem text="Account Settings" onAction="#loadEditAccount"/>
                     <MenuItem text="Logout" />
                 </items>
             </MenuButton>

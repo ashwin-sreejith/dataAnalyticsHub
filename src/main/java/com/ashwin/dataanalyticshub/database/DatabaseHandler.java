@@ -5,6 +5,7 @@ import com.ashwin.dataanalyticshub.datamodel.Util;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 public class DatabaseHandler {
     private static final String DATABASE_URL = "jdbc:sqlite:database/dataHub.db";
@@ -25,6 +26,23 @@ public class DatabaseHandler {
             }
         } catch (SQLException e) {
             System.err.println("Failed closing database connection: " + e.getMessage());
+        }
+    }
+
+    public static boolean authenticateUser(String username, String password) {
+        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+        try (Connection connection = connect();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            return resultSet.next(); // If a row is returned, the authentication is successful
+        } catch (SQLException e) {
+            System.err.println("Error during authentication: " + e.getMessage());
+            return false;
         }
     }
 
@@ -112,25 +130,53 @@ public class DatabaseHandler {
         return fullName;
     }
 
-    public static SocialMediaPost retrievePostById(int postId) {
-        String query = "SELECT * FROM postCollection WHERE id = ?"; // Replace with your table name
+//    public static SocialMediaPost retrievePostById(int postId) {
+//        String query = "SELECT * FROM postCollection WHERE id = ?";
+//
+//        try (Connection connection = connect();
+//             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+//
+//            preparedStatement.setInt(1, postId);
+//
+//            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+//                if (resultSet.next()) {
+//                    int id = resultSet.getInt("id");
+//                    String content = resultSet.getString("content");
+//                    String author = resultSet.getString("userId");
+//                    int likes = resultSet.getInt("likes");
+//                    int shares = resultSet.getInt("shares");
+//                    String date = resultSet.getString("date");
+//                    LocalDateTime dateTime = Util.localDateTimeFormatFunc(date);
+//                    System.out.println(dateTime);
+//                    return new SocialMediaPost(id, content, author, likes, shares, dateTime);
+//                }
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return null;
+//    }
+
+    public static SocialMediaPost retrievePostById(int postId, String username) {
+        String query = "SELECT * FROM postCollection WHERE id = ? AND userId = ?";
 
         try (Connection connection = connect();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, postId);
+            preparedStatement.setString(2, username);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     int id = resultSet.getInt("id");
                     String content = resultSet.getString("content");
-                    String author = resultSet.getString("userId");
                     int likes = resultSet.getInt("likes");
                     int shares = resultSet.getInt("shares");
                     String date = resultSet.getString("date");
                     LocalDateTime dateTime = Util.localDateTimeFormatFunc(date);
-                    System.out.println(dateTime);
-                    return new SocialMediaPost(id, content, author, likes, shares, dateTime);
+
+                    return new SocialMediaPost(id, content, username, likes, shares, dateTime);
                 }
             }
         } catch (SQLException e) {
@@ -138,6 +184,87 @@ public class DatabaseHandler {
         }
 
         return null;
+    }
+
+    public static HashMap<String, String> fetchAccountDetails(String username) {
+        String query = "SELECT * FROM users WHERE username=?";
+        HashMap<String, String> userDetails= new HashMap<>();
+
+        try (Connection connection = connect();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, username);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    userDetails.put("username", resultSet.getString("username"));
+                    userDetails.put("firstname", resultSet.getString("firstname"));
+                    userDetails.put("lastname", resultSet.getString("lastname"));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching user details: " + e.getMessage());
+        }
+
+        return userDetails;
+
+    }
+
+    public static boolean doesUsernameExist(String username) {
+        String query = "SELECT COUNT(*) AS count FROM users WHERE username = ?";
+
+        try (Connection connection = connect();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, username);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt("count");
+                return count > 0;
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error checking username existence: " + e.getMessage());
+        }
+        return false;
+    }
+
+    public static Boolean updateUsernameAndReferences(String oldUsername, String newUsername, String password, String firstname, String lastname) {
+        String updateUsersQuery = "UPDATE users SET username = ?, firstname = ?, lastname = ?, password = ? WHERE username = ?";
+        String updatePostCollectionQuery = "UPDATE postCollection SET userId = ? WHERE userId = ?";
+
+        try (Connection connection = connect()) {
+            assert connection != null;
+            connection.setAutoCommit(false);
+
+
+            try (PreparedStatement preparedStatementUsers = connection.prepareStatement(updateUsersQuery)) {
+                preparedStatementUsers.setString(1, newUsername);
+                preparedStatementUsers.setString(2, firstname);
+                preparedStatementUsers.setString(3, lastname);
+                preparedStatementUsers.setString(4, password);
+                preparedStatementUsers.setString(5, oldUsername);
+                preparedStatementUsers.executeUpdate();
+            }
+
+
+            try (PreparedStatement preparedStatementPostCollection = connection.prepareStatement(updatePostCollectionQuery)) {
+                preparedStatementPostCollection.setString(1, newUsername);
+                preparedStatementPostCollection.setString(2, oldUsername);
+                preparedStatementPostCollection.executeUpdate();
+            }
+
+            connection.commit();
+            connection.setAutoCommit(true);
+
+            System.out.println("Username and references updated successfully.");
+            return true;
+
+        } catch (SQLException e) {
+            System.err.println("Error updating username and references: " + e.getMessage());
+        }
+
+        return false;
     }
 
 

@@ -10,24 +10,27 @@
     <Label text="SIGN UP" style="-fx-font-weight: bold; font-size: 30px;"/>
   </HBox>
 
-
   <Label text="First Name" style="-fx-font-size: 14px;" GridPane.rowIndex="1"/>
-  <TextField fx:id="firstNameField" promptText="Firstname" style="-fx-font-size: 14px;" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+  <TextField fx:id="firstNameField" promptText="Firstname" style="-fx-font-size: 14px;"
+             GridPane.columnIndex="0" GridPane.rowIndex="2" />
 
   <Label text="Last Name" style="-fx-font-size: 14px;" GridPane.rowIndex="3"/>
-  <TextField fx:id="lastNameField" promptText="Lastname" style="-fx-font-size: 14px;" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+  <TextField fx:id="lastNameField" promptText="Lastname" style="-fx-font-size: 14px;"
+             GridPane.columnIndex="0" GridPane.rowIndex="4" />
 
   <Label text="Username:" style="-fx-font-size: 14px;" GridPane.rowIndex="5"/>
-  <TextField fx:id="userNameField" promptText="Username" style="-fx-font-size: 14px;" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+  <TextField fx:id="userNameField" promptText="Username" style="-fx-font-size: 14px;"
+             GridPane.columnIndex="0" GridPane.rowIndex="6" />
 
   <Label text="Password:" style="-fx-font-size: 14px;" GridPane.rowIndex="7" />
-  <PasswordField fx:id="passwordField" promptText="Password" style="-fx-font-size: 14px;" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+  <PasswordField fx:id="passwordField" promptText="Password" style="-fx-font-size: 14px;"
+                 GridPane.columnIndex="0" GridPane.rowIndex="8" />
 
+  <Label fx:id="loginStatusLabel" style="-fx-font-size: 14px; -fx-text-fill: red;"
+         GridPane.columnSpan="2" GridPane.rowIndex="11" />
 
-
-  <Label fx:id="loginStatusLabel" style="-fx-font-size: 14px; -fx-text-fill: red;" GridPane.columnSpan="2" GridPane.rowIndex="11" />
-
-  <Button text="Signup" onAction="#handleSignup" style="-fx-font-size: 14px;" GridPane.rowIndex="9" GridPane.columnIndex="0" prefWidth="200"/>
+  <Button text="Signup" onAction="#handleSignup" style="-fx-font-size: 14px;" GridPane.rowIndex="9"
+          GridPane.columnIndex="0" prefWidth="200"/>
 
   <HBox GridPane.rowIndex="10" alignment="CENTER">
     <Label text="Already a member?" style="-fx-font-size: 14px; -fx-text-fill: #343434;"/>

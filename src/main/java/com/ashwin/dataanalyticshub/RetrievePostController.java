@@ -11,7 +11,7 @@ import javafx.collections.ObservableList;
 
 import java.time.LocalDateTime;
 
-public class retrievePostController {
+public class RetrievePostController {
     public GridPane retrievePost;
 
     public TextField postId;
@@ -32,6 +32,7 @@ public class retrievePostController {
     @FXML
     private TableColumn<SocialMediaPost, LocalDateTime> datesCol;
 
+    private String username;
 
 
 
@@ -40,7 +41,6 @@ public class retrievePostController {
         saveButton.setVisible(false);
         saveButton.setManaged(false);
 
-        // Initialize cell value factories to extract properties from SocialMediaPost
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         contentCol.setCellValueFactory(new PropertyValueFactory<>("content"));
         authorCol.setCellValueFactory(new PropertyValueFactory<>("author"));
@@ -48,7 +48,6 @@ public class retrievePostController {
         sharesCol.setCellValueFactory(new PropertyValueFactory<>("shares"));
         datesCol.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
 
-        // Adjust the column widths (you can adjust these values accordingly)
         idCol.setPrefWidth(100);
         contentCol.setPrefWidth(300);
         likesCol.setPrefWidth(100);
@@ -59,7 +58,8 @@ public class retrievePostController {
     }
     public void handleRetrieval() {
         SocialMediaOperations x = new SocialMediaOperations();
-        SocialMediaPost post = x.retrievePost(postId.getText());
+        System.out.println(this.username);
+        SocialMediaPost post = x.retrievePost(postId.getText(), this.username);
         if(post == null) {
             userMessage.setText("Post with ID " + postId.getText() + " doesn't exist!");
         }
@@ -67,11 +67,15 @@ public class retrievePostController {
             ObservableList<SocialMediaPost> postsList = FXCollections.observableArrayList();
             postsList.add(post);
 
-            // Set the items in the TableView
             postTable.setItems(postsList);
             saveButton.setVisible(true);
             saveButton.setManaged(true);
         }
+    }
+
+    public void setUserName(String username) {
+        System.out.println("Hello");
+        this.username = username;
     }
 
     public void handleSave() {
