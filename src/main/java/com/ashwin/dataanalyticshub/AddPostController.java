@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -45,29 +46,17 @@ public class AddPostController {
         hours = (hours.length() == 1) ? "0" + hours : hours;
         minutes = (minutes.length() == 1) ? "0" + minutes : minutes;
         dateTime = dateTime + " " + hours + ":" + minutes;
+        System.out.println("BFR:"+dateTime);
 
-        String formattedDateTime;
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HH:mm");
-            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
-            LocalDateTime parsedDateTime = LocalDateTime.parse(dateTime, inputFormatter);
-            DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-            formattedDateTime = parsedDateTime.format(outputFormatter);
-        } catch (DateTimeParseException e) {
-            userMessage.setText("Invalid Date");
-            return;
-        }
-
-
-        System.out.println(formattedDateTime);
         postDetails.put("postId", id);
         postDetails.put("content", content);
         postDetails.put("author", this.userName);
         postDetails.put("likes", likes);
         postDetails.put("shares", shares);
-        postDetails.put("dateTime", formattedDateTime);
+        postDetails.put("dateTime", dateTime);
         String message = x.addNewPost(postDetails);
         if (message.equals("Success")) {
+            userMessage.setTextFill(Color.GREEN);
             userMessage.setText("Post Added Successfully");
         } else {
             userMessage.setText(message);

@@ -2,8 +2,12 @@ package com.ashwin.dataanalyticshub;
 
 import com.ashwin.dataanalyticshub.database.DatabaseHandler;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -13,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -57,7 +62,7 @@ public class EditAccountController {
         }
     }
 
-    public void handleEdit() {
+    public void handleEdit() throws IOException {
         String firstName = firstNameField.getText();
         String lastName = lastNameField.getText();
         String newUserName = newUserNameField.getText();
@@ -77,8 +82,10 @@ public class EditAccountController {
             editStatusLabel.setTextFill(Color.RED);
             editStatusLabel.setText("Password cannot be empty");
         } else {
-
-            boolean doesUserExist = DatabaseHandler.doesUsernameExist(newUserName);
+            boolean doesUserExist = false;
+            if (!newUserName.equals(this.username)) {
+                doesUserExist = DatabaseHandler.doesUsernameExist(newUserName);
+            }
             if (doesUserExist) {
                 editStatusLabel.setTextFill(Color.RED);
                 editStatusLabel.setText("Username already taken!");
@@ -89,8 +96,10 @@ public class EditAccountController {
                     firstName, lastName);
 
             if (updateSuccessful) {
+
                 editStatusLabel.setTextFill(Color.GREEN);
-                editStatusLabel.setText("Account Details Updated Successfully!");
+                editStatusLabel.setText("Update Successful. Login Again!");
+
             } else {
                 editStatusLabel.setText("Something went wrong! Contact admin");
             }
@@ -115,7 +124,7 @@ public class EditAccountController {
         } else {
             if (!userName.equals(this.username)) {
                 validateStatusLabel.setTextFill(Color.RED);
-                validateStatusLabel.setText("Invalid Username/Password");
+                validateStatusLabel.setText("Invalid Username for current user");
                 return;
             }
             boolean isAuthenticated = DatabaseHandler.authenticateUser(userName, password);
@@ -125,6 +134,7 @@ public class EditAccountController {
                 return;
             }
 
+            this.username = userName;
             newUserNameField.setText(userName);
             newPasswordField.setText(password);
             validateForm.setVisible(false);
@@ -134,4 +144,5 @@ public class EditAccountController {
         }
 
     }
+
 }

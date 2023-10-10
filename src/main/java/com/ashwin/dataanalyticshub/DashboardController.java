@@ -4,14 +4,18 @@ import com.ashwin.dataanalyticshub.database.DatabaseHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class DashboardController {
 
     public VBox dynamicWindow;
+    public Button logoutButton;
 
     @FXML
     private Label userLabel;
@@ -31,7 +35,8 @@ public class DashboardController {
     public void setWelcomeMessage(String username) {
         this.userName = username;
         String fullName = DatabaseHandler.getFullNameByUsername(this.userName);
-        userLabel.setText("Welcome, " + fullName +"!");
+        fullName = String.valueOf(titleCase(fullName));
+        userLabel.setText("Welcome, " + fullName);
     }
 
     public void loadAddPostScene() {
@@ -72,5 +77,48 @@ public class DashboardController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void logout() {
+        loadLoginView();
+    }
+    private void loadLoginView() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Login-view.fxml"));
+            Parent loginParent = loader.load();
+            Scene loginScene = new Scene(loginParent, 800, 800);
+
+            Stage stage = (Stage) logoutButton.getScene().getWindow();
+            stage.setScene(loginScene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    private StringBuilder titleCase(String fullName) {
+        boolean capitalise = true;
+        StringBuilder s = new StringBuilder();
+        for (char c : fullName.strip().toCharArray()) {
+            if (c == 32) {
+                capitalise = true;
+                s.append(" ");
+                continue;
+            }
+
+            if (capitalise) {
+                c = Character.toUpperCase(c);
+                s.append(c);
+                capitalise = false;
+            } else {
+                s.append(c);
+            }
+
+
+
+        }
+        System.out.println(s);
+        return s;
     }
 }

@@ -2,6 +2,7 @@ package com.ashwin.dataanalyticshub;
 
 import com.ashwin.dataanalyticshub.datamodel.SocialMediaOperations;
 import com.ashwin.dataanalyticshub.datamodel.SocialMediaPost;
+import com.ashwin.dataanalyticshub.datamodel.Util;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -49,7 +50,7 @@ public class RetrievePostController {
         datesCol.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
 
         idCol.setPrefWidth(100);
-        contentCol.setPrefWidth(300);
+        contentCol.setPrefWidth(250);
         likesCol.setPrefWidth(100);
         sharesCol.setPrefWidth(100);
         authorCol.setPrefWidth(100);
@@ -58,15 +59,18 @@ public class RetrievePostController {
     }
     public void handleRetrieval() {
         SocialMediaOperations x = new SocialMediaOperations();
-        System.out.println(this.username);
+        if (!Util.isValidInteger(postId.getText(), false)) {
+            System.out.println(postId.getText());
+            userMessage.setText("Post ID has to be a non-zero Integer");
+            return;
+        }
         SocialMediaPost post = x.retrievePost(postId.getText(), this.username);
         if(post == null) {
             userMessage.setText("Post with ID " + postId.getText() + " doesn't exist!");
         }
         else {
-            ObservableList<SocialMediaPost> postsList = FXCollections.observableArrayList();
+            ObservableList<SocialMediaPost> postsList = postTable.getItems();
             postsList.add(post);
-
             postTable.setItems(postsList);
             saveButton.setVisible(true);
             saveButton.setManaged(true);
@@ -74,11 +78,10 @@ public class RetrievePostController {
     }
 
     public void setUserName(String username) {
-        System.out.println("Hello");
         this.username = username;
     }
 
     public void handleSave() {
-
+        //TODO: to be implemented
     }
 }

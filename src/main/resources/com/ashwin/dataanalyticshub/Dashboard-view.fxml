@@ -4,27 +4,21 @@
 
 <?import javafx.geometry.Insets?>
 <BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.ashwin.dataanalyticshub.DashboardController">
+            fx:controller="com.ashwin.dataanalyticshub.DashboardController" style="-fx-background-color: #f0f0f0">
     <top>
-        <HBox style="-fx-background-color: #343333">
+        <HBox style="-fx-background-color: #132043">
             <padding>
                 <Insets left="30" top="40" right="42" bottom="30"/>
             </padding>
             <Label text="Dashboard"
                    style="-fx-text-fill: #e2dfdf; -fx-font-size: 35; -fx-font-weight: bold;"/>
             <Region HBox.hgrow="ALWAYS" />
-            <MenuButton text="Settings" style="-fx-text-fill: #e2dfdf; -fx-font-size: 15;
-            -fx-font-weight: bold; -fx-cursor: hand; -fx-background-color: transparent">
-                <items>
-                    <MenuItem text="Account Settings" onAction="#loadEditAccount"/>
-                    <MenuItem text="Logout" />
-                </items>
-            </MenuButton>
+
         </HBox>
     </top>
-    <center>
+    <center >
 
-        <VBox spacing="10" style="-fx-border-color: red">
+        <VBox spacing="10" >
             <padding>
                 <Insets left="30" top="10" right="30" bottom="10"/>
             </padding>
@@ -34,20 +28,34 @@
                 </padding>
                 <Label fx:id="userLabel" text="" style="-fx-text-fill: #d01818; -fx-font-size: 40"/>
             </HBox>
-            <HBox spacing="10">
-                <padding>
-                    <Insets top="5" bottom="5"/>
-                </padding>
-                <Button text="Home" onAction="#loadAllPostScene" />
-                <Button text="Add Post +" onAction="#loadAddPostScene"/>
-                <Button text="Delete Post -"/>
-                <Button text="Retrieve Post" onAction="#loadRetrieval"/>
-                <Button text="Top N"/>
-            </HBox>
-            <VBox fx:id="dynamicWindow"/>
+
+            <VBox style="-fx-background-color: white" fx:id="dynamicWindow"/>
 
         </VBox>
 
-    </center>
+    </center >
+    <left >
+        <VBox spacing="10"  prefWidth="280" style="-fx-background-color: #1F4172">
+            <padding>
+                <Insets top="50" bottom="50" right="20" left="30"/>
+            </padding>
+            <Button text="Home" onAction="#loadAllPostScene" style="-fx-font-size: 20;
+            -fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #FDF0F0; -fx-cursor: hand"/>
+            <Button text="Add Post +" onAction="#loadAddPostScene" style="-fx-font-size: 20;
+            -fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #FDF0F0; -fx-cursor: hand"/>
+            <Button text="Delete Post -" style="-fx-font-size: 20;
+             -fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #FDF0F0; -fx-cursor: hand"/>
+            <Button text="Retrieve Post" onAction="#loadRetrieval" style="-fx-font-size: 20;
+            -fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #FDF0F0; -fx-cursor: hand"/>
+            <Button text="Top N" style="-fx-font-size: 20;
+            -fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #FDF0F0; -fx-cursor: hand"/>
+            <Button text="Account Settings" onAction="#loadEditAccount" style="-fx-font-size: 20;
+            -fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #FDF0F0; -fx-cursor: hand;"/>
+            <Button fx:id="logoutButton" text="Logout" style="-fx-text-fill: #FDF0F0; -fx-font-size: 20;
+            -fx-cursor: hand; -fx-background-color: transparent" onAction="#logout">
+
+            </Button>
+        </VBox>
+    </left>
 
 </BorderPane>

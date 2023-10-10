@@ -48,10 +48,11 @@ public class LoginController {
             if (Objects.equals(fxmlPath, "Dashboard-view.fxml")){
                 DashboardController controller = loader.getController();
                 controller.setWelcomeMessage(String.valueOf(userNameField.getText()));
-                width = 1800;
-                height = 1200;
+                width = 1200;
+                height = 900;
             }
             Scene scene = new Scene(root, width, height);
+            System.out.println(userNameField.getText());
             Stage stage = (Stage) ((Node) userNameField).getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Data Analytics Hub");
@@ -63,8 +64,8 @@ public class LoginController {
 
     public void handleLogin() {
 
-        String username = userNameField.getText();
-        String password = passwordField.getText();
+        String username = userNameField.getText().strip().toLowerCase();
+        String password = passwordField.getText().strip();
 
         if (username.isEmpty() || password.isEmpty()) {
             loginStatusLabel.setTextFill(Color.RED);
@@ -75,8 +76,6 @@ public class LoginController {
         boolean isAuthenticated = DatabaseHandler.authenticateUser(username, password);
 
         if (isAuthenticated) {
-//            loginStatusLabel.setTextFill(Color.GREEN);
-//            loginStatusLabel.setText("Login successful!");
             switchDashboard();
         } else {
             loginStatusLabel.setTextFill(Color.RED);
@@ -86,9 +85,9 @@ public class LoginController {
 
     public void handleSignup() {
 
-        String firstName = firstNameField.getText();
-        String lastName = lastNameField.getText();
-        String username = userNameField.getText();
+        String firstName = firstNameField.getText().strip().toLowerCase();
+        String lastName = lastNameField.getText().strip().toLowerCase();
+        String username = userNameField.getText().strip().toLowerCase();
         String password = passwordField.getText();
 
         if (firstName.isBlank()) {

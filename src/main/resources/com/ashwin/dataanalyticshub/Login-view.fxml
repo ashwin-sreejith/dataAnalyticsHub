@@ -7,28 +7,29 @@
           alignment="CENTER" hgap="30" vgap="15">
 
   <HBox GridPane.rowIndex="0" alignment="CENTER">
-    <Label text="LOGIN" style="-fx-font-weight: bold; font-size: 60px;"/>
+    <Label text="LOGIN" style="-fx-font-weight: bold; -fx-font-size: 35px;"/>
   </HBox>
 
 
-  <Label text="Username:" style="-fx-font-size: 14px;" GridPane.rowIndex="1"/>
-  <TextField fx:id="userNameField" promptText="Username" style="-fx-font-size: 14px;" GridPane.columnIndex="0"
+  <Label text="Username:" style="-fx-font-size: 18px;" GridPane.rowIndex="1"/>
+  <TextField fx:id="userNameField" promptText="Username" style="-fx-font-size: 17px;" GridPane.columnIndex="0"
              GridPane.rowIndex="2" />
 
-  <Label text="Password:" style="-fx-font-size: 14px;" GridPane.rowIndex="3" />
-  <PasswordField fx:id="passwordField" promptText="Password" style="-fx-font-size: 14px;" GridPane.columnIndex="0"
+  <Label text="Password:" style="-fx-font-size: 18px;" GridPane.rowIndex="3" />
+  <PasswordField fx:id="passwordField" promptText="Password" style="-fx-font-size: 17px;" GridPane.columnIndex="0"
                  GridPane.rowIndex="4" />
 
-  <Button text="Login" onAction="#handleLogin" style="-fx-font-size: 14px;-fx-cursor: hand;" GridPane.rowIndex="5"
-          GridPane.columnIndex="0" prefWidth="200"/>
+  <Button text="Login" onAction="#handleLogin" style="-fx-font-size: 17px;-fx-cursor: hand;
+  -fx-background-color: dodgerblue; -fx-text-fill: #FDF0F0;" GridPane.rowIndex="5"
+          GridPane.columnIndex="0" prefWidth="230"/>
 
   <HBox GridPane.rowIndex="6" alignment="CENTER">
-    <Label text="Not a member?" style="-fx-font-size: 14px; -fx-text-fill: #343434;"/>
-    <Button text="Signup" onAction="#switchSignup" style="-fx-font-size: 14px; -fx-background-color: transparent;
+    <Label text="Not a member?" style="-fx-font-size: 18px; -fx-text-fill: #343434;"/>
+    <Button text="Signup" onAction="#switchSignup" style="-fx-font-size: 18px; -fx-background-color: transparent;
                           -fx-cursor: hand; -fx-text-fill: blue"/>
   </HBox>
 
-  <Label fx:id="loginStatusLabel" style="-fx-font-size: 14px; -fx-text-fill: red;" GridPane.columnSpan="2"
+  <Label fx:id="loginStatusLabel" style="-fx-font-size: 17px; -fx-text-fill: red;" GridPane.columnSpan="2"
          GridPane.rowIndex="7" />
 
 </GridPane>

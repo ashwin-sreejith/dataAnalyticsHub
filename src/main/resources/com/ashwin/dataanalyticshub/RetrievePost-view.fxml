@@ -6,21 +6,26 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableColumn?>
+<?import javafx.geometry.Insets?>
 <GridPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:id="retrievePost" alignment="CENTER"
           fx:controller="com.ashwin.dataanalyticshub.RetrievePostController"
-          hgap="10" vgap="10" style="-fx-border-color: blue" gridLinesVisible="false">
-
-    <Label text="Retrieve Post" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-    <Label text="Post Id" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+          hgap="10" vgap="10" style="-fx-background-color: #f0f0f0">
+    <padding>
+        <Insets top="20" bottom="30"/>
+    </padding>
+    <Label text="Retrieve Post" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-size: 25px;"/>
+    <Label text="Post Id" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-size: 18px;"/>
     <HBox GridPane.columnIndex="0" GridPane.rowIndex="2" spacing="12">
         <TextField fx:id="postId" promptText="Enter Post ID to retrieve"
-                    maxWidth="200"/>
-        <Button onAction="#handleRetrieval" text="Retrieve"/>
+                    maxWidth="200" style="-fx-font-size: 17px;"/>
+        <Button onAction="#handleRetrieval" text="Retrieve" style="-fx-font-size: 17px;
+        -fx-background-color: dodgerblue; -fx-text-fill: #FDF0F0;"/>
     </HBox>
-    <Label fx:id="userMessage" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2"/>
+    <Label fx:id="userMessage" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2"
+           style="-fx-font-size: 18px; -fx-text-fill: #a30000"/>
     <Button GridPane.halignment="RIGHT" fx:id="saveButton" onAction="#handleSave" GridPane.columnIndex="0"
-            GridPane.rowIndex="4" text="Save to .csv"/>
-    <TableView fx:id="postTable" prefWidth="1000" GridPane.rowIndex="5">
+            GridPane.rowIndex="5" text="Save to .csv" style="-fx-font-size: 17px;"/>
+    <TableView fx:id="postTable" prefWidth="1000" GridPane.rowIndex="6">
         <columns>
             <TableColumn text="Post ID" fx:id="idCol"/>
             <TableColumn text="Content" fx:id="contentCol"/>
