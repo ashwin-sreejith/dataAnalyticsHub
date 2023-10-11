@@ -130,33 +130,6 @@ public class DatabaseHandler {
         return fullName;
     }
 
-//    public static SocialMediaPost retrievePostById(int postId) {
-//        String query = "SELECT * FROM postCollection WHERE id = ?";
-//
-//        try (Connection connection = connect();
-//             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-//
-//            preparedStatement.setInt(1, postId);
-//
-//            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-//                if (resultSet.next()) {
-//                    int id = resultSet.getInt("id");
-//                    String content = resultSet.getString("content");
-//                    String author = resultSet.getString("userId");
-//                    int likes = resultSet.getInt("likes");
-//                    int shares = resultSet.getInt("shares");
-//                    String date = resultSet.getString("date");
-//                    LocalDateTime dateTime = Util.localDateTimeFormatFunc(date);
-//                    System.out.println(dateTime);
-//                    return new SocialMediaPost(id, content, author, likes, shares, dateTime);
-//                }
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return null;
-//    }
 
     public static SocialMediaPost retrievePostById(int postId, String username) {
         String query = "SELECT * FROM postCollection WHERE id = ? AND userId = ?";

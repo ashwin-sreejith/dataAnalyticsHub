@@ -9,7 +9,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.collections.ObservableList;
+import javafx.stage.FileChooser;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class RetrievePostController {
@@ -82,6 +87,33 @@ public class RetrievePostController {
     }
 
     public void handleSave() {
-        //TODO: to be implemented
+        exportToCSV();
     }
+
+    private void exportToCSV() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialFileName("retrievedPost.csv");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+
+        File outputfile = fileChooser.showSaveDialog(null);
+
+        if (outputfile != null) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputfile))) {
+
+                writer.write("ID,Content,Author,Likes,Shares,DateTime\n");
+
+
+                for (SocialMediaPost post : postTable.getItems()) {
+                    writer.write(String.format("%d,%s,%s,%d,%d,%s\n", post.getId(), post.getContent(),
+                            post.getAuthor(), post.getLikes(), post.getShares(), post.getDateTime()));
+                }
+
+                writer.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 }
