@@ -26,7 +26,7 @@
                 <padding>
                     <Insets top="5" bottom="5"/>
                 </padding>
-                <Label fx:id="userLabel" text="" style="-fx-text-fill: #d01818; -fx-font-size: 40"/>
+                <Label fx:id="userLabel" style="-fx-text-fill: #d01818; -fx-font-size: 40"/>
             </HBox>
 
             <VBox style="-fx-background-color: white" fx:id="dynamicWindow"/>
@@ -35,7 +35,7 @@
 
     </center >
     <left >
-        <VBox spacing="10"  prefWidth="280" style="-fx-background-color: #1F4172">
+        <VBox spacing="10"  prefWidth="280" style="-fx-background-color: #1F4172" >
             <padding>
                 <Insets top="50" bottom="50" right="20" left="30"/>
             </padding>
@@ -49,12 +49,23 @@
             -fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #FDF0F0; -fx-cursor: hand"/>
             <Button text="Top N" style="-fx-font-size: 20;
             -fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #FDF0F0; -fx-cursor: hand"/>
+            <Button fx:id="vipOnly" text="Bulk Import" onAction="#loadPostFromFile" style="-fx-font-size: 20;
+            -fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #FDF0F0; -fx-cursor: hand"/>
             <Button text="Account Settings" onAction="#loadEditAccount" style="-fx-font-size: 20;
             -fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #FDF0F0; -fx-cursor: hand;"/>
             <Button fx:id="logoutButton" text="Logout" style="-fx-text-fill: #FDF0F0; -fx-font-size: 20;
             -fx-cursor: hand; -fx-background-color: transparent" onAction="#logout">
-
             </Button>
+
+            <VBox VBox.vgrow="ALWAYS">
+                <Region VBox.vgrow="ALWAYS" />
+            </VBox>
+            <VBox fx:id="vipSubscription" spacing="15">
+                <Label text="Unlock a VIP subscription for 0$" wrapText="true" maxWidth="250" style="-fx-font-size: 20;
+                -fx-text-fill: #FDF0F0; -fx-font-weight: bold"/>
+                <Button fx:id="vipButton" text="Join" prefWidth="250" style="-fx-background-color: #ffc115; -fx-text-fill: #FDF0F0;
+                 -fx-font-size: 18px; -fx-cursor: hand;" onAction="#handleVip"/>
+            </VBox>
         </VBox>
     </left>
 

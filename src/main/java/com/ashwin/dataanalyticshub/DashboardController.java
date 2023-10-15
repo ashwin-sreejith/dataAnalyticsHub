@@ -1,21 +1,33 @@
 package com.ashwin.dataanalyticshub;
 
 import com.ashwin.dataanalyticshub.database.DatabaseHandler;
+import com.ashwin.dataanalyticshub.datamodel.FileHandler;
+import com.ashwin.dataanalyticshub.datamodel.SocialMediaPost;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import javafx.scene.paint.Color;
+import javafx.stage.*;
+import java.io.File;
 
 import java.io.IOException;
+import java.util.List;
 
 public class DashboardController {
 
     public VBox dynamicWindow;
     public Button logoutButton;
+    public VBox vipSubscription;
+    public Button vipButton;
+    public Button vipOnly;
 
     @FXML
     private Label userLabel;
@@ -24,17 +36,22 @@ public class DashboardController {
     private MenuButton optionsMenu;
 
     private String userName;
+    private boolean isVip;
 
 
     @FXML
     public void initialize() {
         loadAllPostScene();
+        vipOnly.setVisible(false);
+        vipOnly.setManaged(false);
     }
 
     // Method to set the welcome message with the provided username
     public void setWelcomeMessage(String username) {
         this.userName = username;
         String fullName = DatabaseHandler.getFullNameByUsername(this.userName);
+        isVip = DatabaseHandler.isVip(this.userName);
+        vipToggle(isVip);
         fullName = String.valueOf(titleCase(fullName));
         userLabel.setText("Welcome, " + fullName);
     }
@@ -114,11 +131,103 @@ public class DashboardController {
             } else {
                 s.append(c);
             }
-
-
-
         }
         System.out.println(s);
         return s;
     }
+
+    public void handleVip() {
+        vipDialogPopup();
+    }
+
+    private void vipDialogPopup() {
+        // Create a Stage for the popup
+        Stage popupStage = new Stage();
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.initStyle(StageStyle.UNIFIED);
+        popupStage.setTitle("Join VIP");
+        popupStage.initOwner(vipButton.getScene().getWindow());
+
+        VBox popupContainer = new VBox(10);
+        HBox buttonContainer = new HBox(10);
+        popupContainer.setPadding(new Insets(25));
+        buttonContainer.setSpacing(10);
+        popupContainer.setSpacing(20);
+
+        Label label = new Label("Would you like to subscribe to the application for a monthly fee of $0?");
+        label.setStyle("-fx-font-size: 18px");
+        Button proceedButton = new Button("Proceed");
+        Button closeButton = new Button("Close");
+        proceedButton.setStyle("-fx-background-color: #05c005; -fx-text-fill: #FDF0F0; -fx-cursor: hand; -fx-font-size: 17px");
+        closeButton.setStyle("-fx-background-color: #b90808; -fx-text-fill: #FDF0F0; -fx-cursor: hand; -fx-font-size: 17px");
+
+        closeButton.setOnAction(event -> {
+            if (closeButton.getText().equals("Logout"))
+                logout();
+            popupStage.close();
+        });
+        proceedButton.setOnAction(event -> {
+            label.setText("Please log out and log in again to access VIP functionalities.");
+            setVip(this.userName);
+            proceedButton.setVisible(false);
+            proceedButton.setManaged(false);
+            closeButton.setText("Logout");
+        });
+
+        buttonContainer.getChildren().addAll(proceedButton, closeButton);
+        popupContainer.getChildren().addAll(label, buttonContainer);
+
+        Scene popupScene = new Scene(popupContainer, Color.WHITE);
+        popupStage.setScene(popupScene);
+
+        Window currentWindow = vipButton.getScene().getWindow();
+        double windowWidth = currentWindow.getWidth();
+        double windowHeight = currentWindow.getHeight();
+        double xCord = currentWindow.getX() + (windowWidth - popupContainer.prefWidth(-1) - 300) / 2;
+        double yCord = currentWindow.getY() + (windowHeight - popupContainer.prefHeight(-1)) / 2;
+        popupStage.setX(xCord);
+        popupStage.setY(yCord);
+
+        popupStage.showAndWait();
+    }
+
+    public void vipToggle(boolean isVip) {
+        if (isVip) {
+            vipSubscription.setVisible(false);
+            vipSubscription.setManaged(false);
+            vipOnly.setVisible(true);
+            vipOnly.setManaged(true);
+        }
+    }
+
+    public void setVip(String username) {
+        DatabaseHandler.setVipForUser(username);
+    }
+
+    public void loadPostFromFile() {
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select a File");
+
+        // Set extension filters if needed (optional)
+        FileChooser.ExtensionFilter extFilter =
+                new FileChooser.ExtensionFilter("CSV Files (*.csv)", "*.csv");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        // Show the FileChooser and wait for user selection
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
+
+        if (selectedFile != null) {
+            FileHandler fileHandler = new FileHandler();
+            fileHandler.setUsername(this.userName);
+            List<SocialMediaPost> posts = fileHandler.loadPostsFromCSV(selectedFile.getAbsolutePath());
+            // Insert posts into the database
+            for (SocialMediaPost post : posts) {
+                DatabaseHandler.insertPost(post);
+            }
+        } else {
+            System.out.println("No file selected.");
+        }
+    }
+
 }

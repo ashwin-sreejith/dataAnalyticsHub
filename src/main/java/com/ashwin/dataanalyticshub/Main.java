@@ -19,15 +19,6 @@ public class Main extends Application {
         stage.setTitle("Data Analytics Hub");
         stage.setScene(scene);
         stage.show();
-
-//        // Load posts from CSV
-//        FileHandler fileHandler = new FileHandler();
-//        List<SocialMediaPost> posts = fileHandler.loadPostsFromCSV("resources/posts.csv");
-//
-//        // Insert posts into the database
-//        for (SocialMediaPost post : posts) {
-//            DatabaseHandler.insertPost(post);
-//        }
     }
 
 

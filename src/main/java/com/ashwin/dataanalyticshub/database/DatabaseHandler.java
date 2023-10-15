@@ -5,7 +5,9 @@ import com.ashwin.dataanalyticshub.datamodel.Util;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class DatabaseHandler {
     private static final String DATABASE_URL = "jdbc:sqlite:database/dataHub.db";
@@ -202,7 +204,7 @@ public class DatabaseHandler {
         return false;
     }
 
-    public static Boolean updateUsernameAndReferences(String oldUsername, String newUsername, String password, String firstname, String lastname) {
+    public static boolean updateUsernameAndReferences(String oldUsername, String newUsername, String password, String firstname, String lastname) {
         String updateUsersQuery = "UPDATE users SET username = ?, firstname = ?, lastname = ?, password = ? WHERE username = ?";
         String updatePostCollectionQuery = "UPDATE postCollection SET userId = ? WHERE userId = ?";
 
@@ -240,5 +242,119 @@ public class DatabaseHandler {
         return false;
     }
 
+    public static boolean isVip(String username) {
+        String query = "SELECT vip FROM users WHERE username = ?";
+        boolean isVip = false;
 
+        try (Connection connection = connect();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, username);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int vipValue = resultSet.getInt("vip");
+                    isVip = vipValue == 1;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return isVip;
+    }
+
+    public static void setVipForUser(String username) {
+        String query = "UPDATE users SET vip = 1 WHERE username = ?";
+
+        try (Connection connection = connect();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, username);
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                System.out.println("VIP status updated for user: " + username);
+            } else {
+                System.out.println("User not found or VIP status could not be updated.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error updating VIP status for user: " + username);
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void saveRetrievedPost(String userId, int postId) {
+        try (Connection connection = connect();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "INSERT INTO user_retrieved_posts (userId, postId) VALUES (?, ?)")) {
+
+            preparedStatement.setString(1, userId);
+            preparedStatement.setInt(2, postId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static List<Integer> getUserRetrievedPostIds(String userId) {
+        List<Integer> postIds = new ArrayList<>();
+        try (Connection connection = connect();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "SELECT postId FROM user_retrieved_posts WHERE userId = ?")) {
+
+            preparedStatement.setString(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                postIds.add(resultSet.getInt("postId"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return postIds;
+    }
+
+    public static List<SocialMediaPost> getPostsForUser(String userId) {
+        List<SocialMediaPost> posts = new ArrayList<>();
+
+        try (Connection connection = connect()) {
+            // Get post IDs for the user
+            List<Integer> postIds = getUserRetrievedPostIds(userId);
+
+            // Fetch the posts using post IDs
+            for (Integer postId : postIds) {
+                try (PreparedStatement preparedStatement = connection.prepareStatement(
+                        "SELECT * FROM postCollection WHERE id = ?")) {
+
+                    preparedStatement.setInt(1, postId);
+                    ResultSet resultSet = preparedStatement.executeQuery();
+
+                    if (resultSet.next()) {
+                        // Extract post details
+                        int id = resultSet.getInt("id");
+                        String content = resultSet.getString("content");
+                        String author = resultSet.getString("userId");
+                        int likes = resultSet.getInt("likes");
+                        int shares = resultSet.getInt("shares");
+                        String date = resultSet.getString("date");
+                        LocalDateTime dateTime = Util.localDateTimeFormatFunc(date);
+
+                        // Create a SocialMediaPost object and add to the list
+                        SocialMediaPost post = new SocialMediaPost(id, content, author, likes, shares, dateTime);
+                        posts.add(post);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return posts;
+    }
 }

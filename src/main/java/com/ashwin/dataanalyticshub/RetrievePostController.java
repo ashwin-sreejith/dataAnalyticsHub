@@ -1,5 +1,6 @@
 package com.ashwin.dataanalyticshub;
 
+import com.ashwin.dataanalyticshub.database.DatabaseHandler;
 import com.ashwin.dataanalyticshub.datamodel.SocialMediaOperations;
 import com.ashwin.dataanalyticshub.datamodel.SocialMediaPost;
 import com.ashwin.dataanalyticshub.datamodel.Util;
@@ -16,6 +17,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RetrievePostController {
     public GridPane retrievePost;
@@ -39,13 +42,23 @@ public class RetrievePostController {
     private TableColumn<SocialMediaPost, LocalDateTime> datesCol;
 
     private String username;
+    private ObservableList<SocialMediaPost> postsList = FXCollections.observableArrayList();
 
 
 
     @FXML
     public void initialize() {
-        saveButton.setVisible(false);
-        saveButton.setManaged(false);
+
+        if (!postsList.isEmpty()) {
+            saveButton.setVisible(false);
+            saveButton.setManaged(false);
+        }
+        else {
+            saveButton.setVisible(true);
+            saveButton.setManaged(true);
+        }
+
+
 
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         contentCol.setCellValueFactory(new PropertyValueFactory<>("content"));
@@ -61,6 +74,7 @@ public class RetrievePostController {
         authorCol.setPrefWidth(100);
         datesCol.setPrefWidth(200);
 
+
     }
     public void handleRetrieval() {
         SocialMediaOperations x = new SocialMediaOperations();
@@ -74,16 +88,22 @@ public class RetrievePostController {
             userMessage.setText("Post with ID " + postId.getText() + " doesn't exist!");
         }
         else {
-            ObservableList<SocialMediaPost> postsList = postTable.getItems();
+            DatabaseHandler.saveRetrievedPost(this.username, post.getId());
+            postsList = postTable.getItems();
             postsList.add(post);
             postTable.setItems(postsList);
             saveButton.setVisible(true);
             saveButton.setManaged(true);
+
         }
     }
 
     public void setUserName(String username) {
+
         this.username = username;
+        List<SocialMediaPost> retrievedPostData = DatabaseHandler.getPostsForUser(this.username);
+        this.postsList.addAll(retrievedPostData);
+        postTable.setItems(postsList);
     }
 
     public void handleSave() {

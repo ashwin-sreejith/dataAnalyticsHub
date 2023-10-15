@@ -32,7 +32,6 @@ public class Util {
 
     // validates DateTime inputs and returns true if valid
     public static boolean isValidDateTime(String input) {
-        System.out.println("ISVALID:"+input);
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy HH:mm");
             LocalDateTime.parse(input, formatter);
@@ -73,7 +72,7 @@ public class Util {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
             String formattedDate =  dateString.format(formatter);
-            System.out.println(formattedDate);
+
             return formattedDate;
         } catch (Exception e) {
             System.out.println("Invalid Date");
@@ -82,11 +81,11 @@ public class Util {
     }
 
     public static LocalDateTime localDateTimeFormatFunc(String dateString) {
-        System.out.println(dateString);
+
         try{
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
             LocalDateTime dateTime =  LocalDateTime.parse(dateString, formatter);
-            System.out.println(dateTime);
+
             return dateTime;
         } catch (Exception e) {
             System.out.println("Invalid Date");
