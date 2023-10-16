@@ -39,8 +39,8 @@ public class DeletePostController {
             userMessage.setText("Post ID has to be a non-zero Integer");
             return;
         }
-        SocialMediaOperations x = new SocialMediaOperations();
-        SocialMediaPost post = x.retrievePost(postIdField.getText(), this.userName);
+        SocialMediaOperations operations = SocialMediaOperations.getInstance();
+        SocialMediaPost post = operations.retrievePost(postIdField.getText(), this.userName);
         if(post == null) {
             userMessage.setText("Post with ID " + postIdField.getText() + " doesn't exist!");
             return;

@@ -66,13 +66,13 @@ public class RetrievePostController {
 
     }
     public void handleRetrieval() {
-        SocialMediaOperations x = new SocialMediaOperations();
+        SocialMediaOperations operations = SocialMediaOperations.getInstance();
         if (!Util.isValidInteger(postId.getText(), false)) {
             System.out.println(postId.getText());
             userMessage.setText("Post ID has to be a non-zero Integer");
             return;
         }
-        SocialMediaPost post = x.retrievePost(postId.getText(), this.username);
+        SocialMediaPost post = operations.retrievePost(postId.getText(), this.username);
         if(post == null) {
             userMessage.setText("Post with ID " + postId.getText() + " doesn't exist!");
         }

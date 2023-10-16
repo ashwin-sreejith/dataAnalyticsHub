@@ -6,6 +6,17 @@ import java.util.*;
 
 // handles all operations that can be performed using posts
 public class SocialMediaOperations {
+
+    private static SocialMediaOperations instance;
+
+    private SocialMediaOperations() {}
+
+    public static synchronized SocialMediaOperations getInstance() {
+        if (instance == null) {
+            instance = new SocialMediaOperations();
+        }
+        return instance;
+    }
     // TODO: Custom exception handling instead of string error messages
     // TODO: Date format to be with / instead of -
     // adds new posts to the collection
