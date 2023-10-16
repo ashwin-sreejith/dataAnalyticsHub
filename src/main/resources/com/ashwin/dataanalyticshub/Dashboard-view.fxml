@@ -26,7 +26,7 @@
                 <padding>
                     <Insets top="5" bottom="5"/>
                 </padding>
-                <Label fx:id="userLabel" style="-fx-text-fill: #d01818; -fx-font-size: 40"/>
+                <Label fx:id="userLabel" style="-fx-text-fill: red; -fx-font-size: 40"/>
             </HBox>
 
             <VBox style="-fx-background-color: white" fx:id="dynamicWindow"/>

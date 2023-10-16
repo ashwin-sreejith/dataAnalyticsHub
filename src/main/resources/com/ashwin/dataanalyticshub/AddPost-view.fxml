@@ -21,19 +21,19 @@
                GridPane.rowIndex="4" />
 
     <Label text="Likes" style="-fx-font-size: 18px;" GridPane.rowIndex="5" />
-    <TextField fx:id="likesField" promptText="Content" style="-fx-font-size: 17px;"
+    <TextField fx:id="likesField" promptText="Likes" style="-fx-font-size: 17px;"
                GridPane.columnIndex="0"
                GridPane.rowIndex="6" />
 
     <Label text="Shares" style="-fx-font-size: 18px;" GridPane.rowIndex="7" />
-    <TextField fx:id="sharesField" promptText="Content" style="-fx-font-size: 17px;"
+    <TextField fx:id="sharesField" promptText="Shares" style="-fx-font-size: 17px;"
                GridPane.columnIndex="0"
                GridPane.rowIndex="8" />
 
     <Label text="Date" style="-fx-font-size: 18px;" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
     <Label text="Hours" style="-fx-font-size: 18px;" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
     <Label text="Minutes" style="-fx-font-size: 18px;" GridPane.rowIndex="9" GridPane.columnIndex="3"/>
-    <DatePicker fx:id="dateField" GridPane.rowIndex="10" GridPane.columnIndex="0" editable="false"
+    <DatePicker fx:id="dateField" GridPane.rowIndex="10" promptText="Date" GridPane.columnIndex="0" editable="false"
                 style="-fx-font-size: 17px;"/>
     <Spinner fx:id="spinnerHour" GridPane.rowIndex="10" GridPane.columnIndex="1" min="00" max="23" prefWidth="75"
              style="-fx-font-size: 17px;"/>
@@ -45,9 +45,9 @@
     <Button text="Add Post" onAction="#handleAddPost" style="-fx-font-size: 17px;-fx-cursor: hand;
     -fx-background-color: dodgerblue; -fx-text-fill: #FDF0F0;"
             GridPane.rowIndex="11"
-            GridPane.columnIndex="0" prefWidth="200"/>
+            GridPane.columnIndex="0" prefWidth="247"/>
 
     <Label fx:id="userMessage" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="12"
-           style="-fx-font-size: 17px; -fx-text-fill: #a30000"/>
+           style="-fx-font-size: 17px; -fx-text-fill: red"/>
 
 </GridPane>

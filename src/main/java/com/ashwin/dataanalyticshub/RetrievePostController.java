@@ -49,17 +49,6 @@ public class RetrievePostController {
     @FXML
     public void initialize() {
 
-        if (!postsList.isEmpty()) {
-            saveButton.setVisible(false);
-            saveButton.setManaged(false);
-        }
-        else {
-            saveButton.setVisible(true);
-            saveButton.setManaged(true);
-        }
-
-
-
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         contentCol.setCellValueFactory(new PropertyValueFactory<>("content"));
         authorCol.setCellValueFactory(new PropertyValueFactory<>("author"));
@@ -94,7 +83,6 @@ public class RetrievePostController {
             postTable.setItems(postsList);
             saveButton.setVisible(true);
             saveButton.setManaged(true);
-
         }
     }
 
@@ -104,6 +92,14 @@ public class RetrievePostController {
         List<SocialMediaPost> retrievedPostData = DatabaseHandler.getPostsForUser(this.username);
         this.postsList.addAll(retrievedPostData);
         postTable.setItems(postsList);
+        if (!postsList.isEmpty()) {
+            saveButton.setVisible(true);
+            saveButton.setManaged(true);
+        }
+        else {
+            saveButton.setVisible(false);
+            saveButton.setManaged(false);
+        }
     }
 
     public void handleSave() {

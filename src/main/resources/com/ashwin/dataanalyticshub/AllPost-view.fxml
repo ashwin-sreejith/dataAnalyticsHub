@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 
-<TableView xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="com.ashwin.dataanalyticshub.AllPostController"
-           fx:id="postTableView" prefWidth="1000">
-    <columns>
-        <TableColumn text="Post ID" />
-        <TableColumn text="Content" />
-        <TableColumn text="Likes" />
-        <TableColumn text="Shares" />
-        <TableColumn text="Actions">
-            <!-- Define the cell factory for the Actions column -->
-        </TableColumn>
-    </columns>
-</TableView>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.chart.PieChart?>
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.ashwin.dataanalyticshub.AllPostController" spacing="30" style="-fx-background-color: #f0f0f0">
+
+    <PieChart fx:id="pieChart" prefHeight="300" prefWidth="300" />
+
+
+    <TableView fx:id="postTable" prefWidth="1000" fixedCellSize="40.0">
+        <columns>
+            <TableColumn text="Post ID" fx:id="idCol" style="-fx-font-size: 15px;"/>
+            <TableColumn text="Content" fx:id="contentCol" style="-fx-font-size: 15px;"/>
+            <TableColumn text="Author" fx:id="authorCol" style="-fx-font-size: 15px;"/>
+            <TableColumn text="Likes" fx:id="likesCol" style="-fx-font-size: 15px;"/>
+            <TableColumn text="Shares" fx:id="sharesCol" style="-fx-font-size: 15px;"/>
+            <TableColumn text="DateTime" fx:id="datesCol" style="-fx-font-size: 15px;"/>
+        </columns>
+    </TableView>
+
+</VBox>

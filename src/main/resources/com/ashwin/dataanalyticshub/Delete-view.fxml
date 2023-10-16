@@ -18,18 +18,18 @@
 
         <TextField fx:id="postIdField" promptText="Enter post ID to delete" style="-fx-font-size: 18px;" prefWidth="300"/>
 
-        <Button text="Delete" style="-fx-font-size: 17px; -fx-background-color: #b80a0a; -fx-text-fill: white"
+        <Button text="Delete" style="-fx-font-size: 17px; -fx-background-color: #c50606; -fx-text-fill: white"
                 onAction="#handleDelete" />
         <Label style="-fx-text-fill: red; -fx-font-size: 17px;" fx:id="userMessage"/>
     </VBox>
-    <VBox GridPane.rowIndex="1" fx:id="confirmationBox" style="-fx-border-color: #d51c1c; -fx-border-radius: 10px;"
+    <VBox GridPane.rowIndex="1" fx:id="confirmationBox" style="-fx-border-color: red; -fx-border-radius: 10px;"
           alignment="CENTER" spacing="20">
         <padding>
             <Insets top="20" right="20" left="20" bottom="20"/>
         </padding>
         <Label style="-fx-font-size: 20px; -fx-font-weight: bold" fx:id="confirmationPrompt"/>
         <HBox spacing="10" alignment="CENTER_RIGHT">
-            <Button fx:id="yesButton" text="Delete" style="-fx-font-size: 17px; -fx-background-color: #d51c1c;
+            <Button fx:id="yesButton" text="Delete" style="-fx-font-size: 17px; -fx-background-color: #c50606;
              -fx-text-fill: white;" onAction="#deletePost"/>
             <Button fx:id="noButton" text="Cancel" style="-fx-font-size: 17px; -fx-background-color: dodgerblue;
              -fx-text-fill: white;" onAction="#cancelDelete"/>

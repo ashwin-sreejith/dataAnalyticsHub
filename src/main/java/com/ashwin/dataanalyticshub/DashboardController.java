@@ -37,7 +37,6 @@ public class DashboardController {
 
     @FXML
     public void initialize() {
-        loadAllPostScene();
         vipOnly.setVisible(false);
         vipOnly.setManaged(false);
     }
@@ -50,6 +49,7 @@ public class DashboardController {
         vipToggle(isVip);
         fullName = String.valueOf(titleCase(fullName));
         userLabel.setText("Welcome, " + fullName);
+        loadAllPostScene();
     }
 
     public void loadAddPostScene() {
@@ -67,11 +67,16 @@ public class DashboardController {
     public void loadSort() { loadChildFXML("TopNLikes-view.fxml"); }
 
 
-
     private void loadChildFXML(String fxmlFileName) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFileName));
             Node child = loader.load();
+
+            if(fxmlFileName.equals("AllPost-view.fxml")){
+                AllPostController controller = loader.getController();
+                controller.setUserName(this.userName);
+            }
+
             if(fxmlFileName.equals("AddPost-view.fxml")){
                 AddPostController controller = loader.getController();
                 controller.setUserName(this.userName);
@@ -235,6 +240,7 @@ public class DashboardController {
             for (SocialMediaPost post : posts) {
                 DatabaseHandler.insertPost(post);
             }
+            loadAllPostScene();
         } else {
             System.out.println("No file selected.");
         }

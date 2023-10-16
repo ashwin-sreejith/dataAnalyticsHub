@@ -443,4 +443,33 @@ public class DatabaseHandler {
         return postCount;
     }
 
+    public static List<SocialMediaPost> getAllPostsByUser(String username) {
+        List<SocialMediaPost> userPosts = new ArrayList<>();
+
+        try (Connection connection = connect()) {
+            String query = "SELECT * FROM postCollection WHERE userId = ?";
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, username);
+                ResultSet resultSet = statement.executeQuery();
+
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String content = resultSet.getString("content");
+                    String author = resultSet.getString("userId");
+                    int likes = resultSet.getInt("likes");
+                    int shares = resultSet.getInt("shares");
+                    String date = resultSet.getString("date");
+                    LocalDateTime dateTime = Util.localDateTimeFormatFunc(date);
+
+                    SocialMediaPost post = new SocialMediaPost(id, content, author, likes, shares, dateTime);
+                    userPosts.add(post);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getting posts for user: " + e.getMessage());
+        }
+
+        return userPosts;
+    }
+
 }
