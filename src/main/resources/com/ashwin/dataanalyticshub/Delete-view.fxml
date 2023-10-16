@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+
+<GridPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.ashwin.dataanalyticshub.DeletePostController"
+          hgap="10" vgap="20" style="-fx-background-color: #f0f0f0" alignment="CENTER">
+    <padding>
+        <Insets top="20" left="20" right="20" bottom="20" />
+    </padding>
+
+    <Text text="Delete Post" style="-fx-font-size: 35px; -fx-font-weight: bold;" GridPane.columnSpan="2" />
+    <VBox spacing="20" GridPane.rowIndex="1" fx:id="inputOptions">
+        <Label style="-fx-font-size: 18px;" text="Post ID:" />
+
+        <TextField fx:id="postIdField" promptText="Enter post ID to delete" style="-fx-font-size: 18px;" prefWidth="300"/>
+
+        <Button text="Delete" style="-fx-font-size: 17px; -fx-background-color: #b80a0a; -fx-text-fill: white"
+                onAction="#handleDelete" />
+        <Label style="-fx-text-fill: red; -fx-font-size: 17px;" fx:id="userMessage"/>
+    </VBox>
+    <VBox GridPane.rowIndex="1" fx:id="confirmationBox" style="-fx-border-color: #d51c1c; -fx-border-radius: 10px;"
+          alignment="CENTER" spacing="20">
+        <padding>
+            <Insets top="20" right="20" left="20" bottom="20"/>
+        </padding>
+        <Label style="-fx-font-size: 20px; -fx-font-weight: bold" fx:id="confirmationPrompt"/>
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button fx:id="yesButton" text="Delete" style="-fx-font-size: 17px; -fx-background-color: #d51c1c;
+             -fx-text-fill: white;" onAction="#deletePost"/>
+            <Button fx:id="noButton" text="Cancel" style="-fx-font-size: 17px; -fx-background-color: dodgerblue;
+             -fx-text-fill: white;" onAction="#cancelDelete"/>
+        </HBox>
+    </VBox>
+
+
+</GridPane>

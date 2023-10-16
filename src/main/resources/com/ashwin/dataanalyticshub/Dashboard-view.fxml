@@ -43,7 +43,7 @@
             -fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #FDF0F0; -fx-cursor: hand"/>
             <Button text="Add Post +" onAction="#loadAddPostScene" style="-fx-font-size: 20;
             -fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #FDF0F0; -fx-cursor: hand"/>
-            <Button text="Delete Post -" style="-fx-font-size: 20;
+            <Button text="Delete Post -" onAction="#loadDeletePost" style="-fx-font-size: 20;
              -fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #FDF0F0; -fx-cursor: hand"/>
             <Button text="Retrieve Post" onAction="#loadRetrieval" style="-fx-font-size: 20;
             -fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #FDF0F0; -fx-cursor: hand"/>

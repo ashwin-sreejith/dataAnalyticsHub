@@ -3,8 +3,6 @@ package com.ashwin.dataanalyticshub;
 import com.ashwin.dataanalyticshub.database.DatabaseHandler;
 import com.ashwin.dataanalyticshub.datamodel.FileHandler;
 import com.ashwin.dataanalyticshub.datamodel.SocialMediaPost;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -31,9 +29,6 @@ public class DashboardController {
 
     @FXML
     private Label userLabel;
-
-    @FXML
-    private MenuButton optionsMenu;
 
     private String userName;
     private boolean isVip;
@@ -67,6 +62,8 @@ public class DashboardController {
     public void loadRetrieval(){ loadChildFXML("RetrievePost-view.fxml"); }
     public void loadEditAccount(){ loadChildFXML("EditAccount-view.fxml"); }
 
+    public void loadDeletePost(){ loadChildFXML("Delete-view.fxml"); }
+
 
     private void loadChildFXML(String fxmlFileName) {
         try {
@@ -84,6 +81,11 @@ public class DashboardController {
 
             if (fxmlFileName.equals("RetrievePost-view.fxml")) {
                 RetrievePostController controller = loader.getController();
+                controller.setUserName(this.userName);
+            }
+
+            if (fxmlFileName.equals("Delete-view.fxml")) {
+                DeletePostController controller = loader.getController();
                 controller.setUserName(this.userName);
             }
 

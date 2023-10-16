@@ -357,4 +357,42 @@ public class DatabaseHandler {
 
         return posts;
     }
+
+    public static boolean deletePostById(int postId) {
+        try (Connection connection = connect()) {
+            String query = "DELETE FROM postCollection WHERE id = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setInt(1, postId);
+                int rowsAffected = preparedStatement.executeUpdate();
+                if (rowsAffected > 0) {
+                    deletePostEntryInRetrieved(postId);
+                    System.out.println("Post with ID " + postId + " deleted successfully.");
+                    return true;
+                } else {
+                    System.out.println("No post found with ID " + postId);
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error deleting post: " + e.getMessage());
+        }
+        return false;
+    }
+
+    private static void deletePostEntryInRetrieved(int postId) {
+        String query = "DELETE FROM user_retrieved_posts WHERE postId = ?";
+        try (Connection connection = connect();
+                PreparedStatement deleteUserRetrievedStatement = connection.prepareStatement(query)) {
+            deleteUserRetrievedStatement.setInt(1, postId);
+            int userRetrievedDeleted = deleteUserRetrievedStatement.executeUpdate();
+            if (userRetrievedDeleted > 0) {
+                System.out.println("Entry for post ID " + postId + " deleted from user_retrieved_posts table.");
+            } else {
+                System.out.println("No entry found for post ID " + postId + " in user_retrieved_posts table.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error deleting post: " + e.getMessage());
+        }
+    }
+
 }
