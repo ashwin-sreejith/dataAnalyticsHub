@@ -14,6 +14,7 @@ public class DatabaseHandler {
 
     public static Connection connect() {
         try {
+
             return DriverManager.getConnection(DATABASE_URL);
         } catch (SQLException e) {
             System.err.println("Connection Failed: " + e.getMessage());

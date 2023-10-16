@@ -1,6 +1,6 @@
 package com.ashwin.dataanalyticshub.datamodel;
+import com.ashwin.dataanalyticshub.customexceptions.*;
 import com.ashwin.dataanalyticshub.database.DatabaseHandler;
-import com.ashwin.dataanalyticshub.datamodel.customexceptions.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -35,7 +35,6 @@ public class SocialMediaOperations {
         int likes = Integer.parseInt(postDetails.get("likes"));
         int shares = Integer.parseInt(postDetails.get("shares"));
         String dateTime = postDetails.get("dateTime");
-
         String formattedDateTime = Util.flipDate(dateTime);
         LocalDateTime date = Util.localDateTimeFormatFunc(formattedDateTime);
         SocialMediaPost newPost = new SocialMediaPost(postId, content, author, likes, shares, date);
@@ -76,7 +75,7 @@ public class SocialMediaOperations {
         String date = postDetails.get("dateTime");
 
         String dateTime = Util.flipDate(date);
-        System.out.println(dateTime);
+
 
         if(!Util.isValidInteger(id, false)) {
             throw new InvalidPostIdException("Id has to be a non-zero Integer");

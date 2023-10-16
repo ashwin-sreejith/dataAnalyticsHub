@@ -1,6 +1,6 @@
 package com.ashwin.dataanalyticshub.datamodel;
 
-import com.ashwin.dataanalyticshub.datamodel.customexceptions.InvalidLineException;
+import com.ashwin.dataanalyticshub.customexceptions.InvalidLineException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
