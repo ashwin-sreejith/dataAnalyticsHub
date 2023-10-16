@@ -3,7 +3,6 @@ package com.ashwin.dataanalyticshub;
 import com.ashwin.dataanalyticshub.database.DatabaseHandler;
 import com.ashwin.dataanalyticshub.datamodel.FileHandler;
 import com.ashwin.dataanalyticshub.datamodel.SocialMediaPost;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;

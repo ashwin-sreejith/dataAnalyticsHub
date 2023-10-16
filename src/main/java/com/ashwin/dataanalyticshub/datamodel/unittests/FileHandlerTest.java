@@ -1,7 +1,5 @@
 //package com.ashwin.dataanalyticshub.datamodel.unittests;
-//
-//import com.example.socialmediaanalyzer.FileHandler;
-//import com.example.socialmediaanalyzer.SocialMediaOperations;
+//import com.ashwin.dataanalyticshub.datamodel.FileHandler;
 //import org.junit.jupiter.api.Test;
 //
 //import java.io.IOException;
@@ -9,10 +7,9 @@
 //
 //import static org.junit.jupiter.api.Assertions.*;
 //
-// tests file handler class
 //public class FileHandlerTest {
 //
-//    private final HashSet<FileHandler> fileHandlers = new HashSet<>();
+//
 //
 //    @Test
 //    void readFile() throws IOException {

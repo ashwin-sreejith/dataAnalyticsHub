@@ -1,6 +1,6 @@
 package com.ashwin.dataanalyticshub.datamodel;
-
 import com.ashwin.dataanalyticshub.database.DatabaseHandler;
+import com.ashwin.dataanalyticshub.datamodel.customexceptions.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -17,35 +17,17 @@ public class SocialMediaOperations {
         }
         return instance;
     }
-    // TODO: Custom exception handling instead of string error messages
-    // TODO: Date format to be with / instead of -
+
     // adds new posts to the collection
     public String addNewPost(HashMap<String, String> postDetails) {
-        String validation = validator(postDetails);
 
-        if(validation.equals("IDError")) {
-            return "Id has to be a non-zero Integer.";
+        try {
+            String validation = validator(postDetails);
+        } catch (InvalidPostIdException | InvalidAuthorException | InvalidContentException | InvalidDateTimeException |
+                 InvalidSharesException | InvalidLikesException e) {
+            return String.valueOf(e.getMessage());
         }
 
-        if(validation.equals("ContentError")) {
-            return "Content cannot be empty.";
-        }
-
-        if(validation.equals("AuthorError")) {
-            return "Invalid username! Contact Admin.";
-        }
-
-        if(validation.equals("LikesError")) {
-            return "Like has to be a whole number.";
-        }
-
-        if(validation.equals("SharesError")) {
-            return "Shares has to be a whole number.";
-        }
-
-        if(validation.equals("DateTimeError")) {
-            return "Invalid Date and Time";
-        }
 
         int postId = Integer.parseInt(postDetails.get("postId"));
         String content = postDetails.get("content");
@@ -70,6 +52,7 @@ public class SocialMediaOperations {
 
     // retrieves a post with its post ID if it exists and collection not empty
     public SocialMediaPost retrievePost(String postId, String username) {
+
         if(!Util.isValidInteger(postId, false)){
             return null;
         }
@@ -82,8 +65,9 @@ public class SocialMediaOperations {
 
     }
 
-    public String validator(HashMap<String, String> postDetails) {
-        //TODO: Use custom exception classes
+    public String validator(HashMap<String, String> postDetails) throws InvalidPostIdException, InvalidAuthorException,
+            InvalidContentException, InvalidDateTimeException, InvalidSharesException, InvalidLikesException {
+
         String id = postDetails.get("postId");
         String content = postDetails.get("content");
         String author = postDetails.get("author");
@@ -95,27 +79,27 @@ public class SocialMediaOperations {
         System.out.println(dateTime);
 
         if(!Util.isValidInteger(id, false)) {
-            return "IDError";
+            throw new InvalidPostIdException("Id has to be a non-zero Integer");
         }
 
         if(!Util.isValidString(content)) {
-            return "ContentError";
+            throw new InvalidContentException("Content cannot be empty or have commas");
         }
 
         if(!Util.isValidString(author)) {
-            return "AuthorError";
+            throw new InvalidAuthorException("Invalid username! Contact Admin");
         }
 
         if(!Util.isValidInteger(likes, true)) {
-            return "LikesError";
+            throw new InvalidLikesException("Like has to be a whole number");
         }
 
         if(!Util.isValidInteger(shares, true)) {
-            return "SharesError";
+            throw new InvalidSharesException("Shares has to be a whole number");
         }
 
         if(!Util.isValidDateTime(dateTime)) {
-            return "DateTimeError";
+            throw new InvalidDateTimeException("Invalid Date and Time");
         }
 
         return "200";
