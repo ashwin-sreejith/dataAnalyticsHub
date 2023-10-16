@@ -5,7 +5,6 @@ import com.ashwin.dataanalyticshub.datamodel.SocialMediaPost;
 import com.ashwin.dataanalyticshub.datamodel.Util;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -18,7 +17,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class TopNLikesController {
+    @FXML
     public TextField sortNumber;
+    @FXML
     public Label userMessage;
 
     @FXML
@@ -36,7 +37,7 @@ public class TopNLikesController {
     @FXML
     private TableColumn<SocialMediaPost, LocalDateTime> datesCol;
 
-    ObservableList<SocialMediaPost> postsList = FXCollections.observableArrayList();
+    private final ObservableList<SocialMediaPost> postsList = FXCollections.observableArrayList();
     private String userName;
 
     @FXML
@@ -68,7 +69,8 @@ public class TopNLikesController {
             return;
         }
 
-        List<SocialMediaPost> postList = DatabaseHandler.getTopNPostsByUser(Integer.parseInt(sortNumber.getText()), this.userName);
+        List<SocialMediaPost> postList = DatabaseHandler.getTopNPostsByUser(Integer.parseInt(sortNumber.getText()),
+                this.userName);
         if (postList.isEmpty()) {
             userMessage.setText("You have no posts in your collection. Please Add some.");
             return;

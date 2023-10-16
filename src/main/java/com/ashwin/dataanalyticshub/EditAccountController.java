@@ -31,10 +31,15 @@ public class EditAccountController {
     public Label editStatusLabel;
     @FXML
     public TextField newUserNameField;
+    @FXML
     public Label validateStatusLabel;
+    @FXML
     public PasswordField newPasswordField;
+    @FXML
     public VBox editAccountForm;
+    @FXML
     public VBox validateForm;
+    @FXML
     public GridPane rootGridpane;
     @FXML
     private TextField userNameField;

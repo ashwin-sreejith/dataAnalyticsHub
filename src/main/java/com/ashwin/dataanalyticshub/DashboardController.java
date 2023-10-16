@@ -21,11 +21,15 @@ import java.io.IOException;
 import java.util.List;
 
 public class DashboardController {
-
+    @FXML
     public VBox dynamicWindow;
+    @FXML
     public Button logoutButton;
+    @FXML
     public VBox vipSubscription;
+    @FXML
     public Button vipButton;
+    @FXML
     public Button vipOnly;
 
     @FXML
@@ -233,7 +237,7 @@ public class DashboardController {
         File selectedFile = fileChooser.showOpenDialog(new Stage());
 
         if (selectedFile != null) {
-            FileHandler fileHandler = new FileHandler();
+            FileHandler fileHandler = FileHandler.getInstance();
             fileHandler.setUsername(this.userName);
             List<SocialMediaPost> posts = fileHandler.loadPostsFromCSV(selectedFile.getAbsolutePath());
             // Insert posts into the database

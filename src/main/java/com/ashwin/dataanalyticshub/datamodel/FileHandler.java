@@ -13,6 +13,14 @@ import java.util.List;
 
 public class FileHandler {
     private String username;
+    private static FileHandler instance;
+
+    public static FileHandler getInstance() {
+        if (instance == null) {
+            instance = new FileHandler();
+        }
+        return instance;
+    }
     public void setUsername(String username) {
         this.username = username;
     }

@@ -17,6 +17,7 @@ import java.util.Map;
 
 public class AllPostController {
 
+    @FXML
     public PieChart pieChart;
     @FXML
     private TableView<SocialMediaPost> postTable;

@@ -21,10 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RetrievePostController {
+    @FXML
     public GridPane retrievePost;
-
+    @FXML
     public TextField postId;
+    @FXML
     public Label userMessage;
+    @FXML
     public Button saveButton;
     @FXML
     private TableView<SocialMediaPost> postTable;

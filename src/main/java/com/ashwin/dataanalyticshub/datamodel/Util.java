@@ -1,8 +1,4 @@
 package com.ashwin.dataanalyticshub.datamodel;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 

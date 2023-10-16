@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 public class DeletePostController {
+
     public Label userMessage;
     public VBox inputOptions;
     public TextField postIdField;
