@@ -395,4 +395,52 @@ public class DatabaseHandler {
         }
     }
 
+    public static List<SocialMediaPost> getTopNPostsByUser(int n, String userId) {
+        List<SocialMediaPost> topPosts = new ArrayList<>();
+        try (Connection connection = connect()) {
+            String query = "SELECT * FROM postCollection WHERE userId = ? ORDER BY likes DESC LIMIT ?";
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, userId);
+                statement.setInt(2, n);
+                ResultSet resultSet = statement.executeQuery();
+
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String content = resultSet.getString("content");
+                    int likes = resultSet.getInt("likes");
+                    int shares = resultSet.getInt("shares");
+                    String date = resultSet.getString("date");
+                    LocalDateTime dateTime = Util.localDateTimeFormatFunc(date);
+
+                    SocialMediaPost post = new SocialMediaPost(id, content, userId, likes, shares, dateTime);
+                    topPosts.add(post);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving top N posts by user: " + e.getMessage());
+        }
+
+        return topPosts;
+    }
+
+    public static int getPostCountForUser(String username) {
+        int postCount = 0;
+
+        try (Connection connection = connect()) {
+            String query = "SELECT COUNT(*) AS postCount FROM postCollection WHERE userId = ?";
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, username);
+                ResultSet resultSet = statement.executeQuery();
+
+                if (resultSet.next()) {
+                    postCount = resultSet.getInt("postCount");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error getting post count for user: " + e.getMessage());
+        }
+
+        return postCount;
+    }
+
 }

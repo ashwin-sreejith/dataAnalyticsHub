@@ -3,6 +3,7 @@ package com.ashwin.dataanalyticshub;
 import com.ashwin.dataanalyticshub.database.DatabaseHandler;
 import com.ashwin.dataanalyticshub.datamodel.FileHandler;
 import com.ashwin.dataanalyticshub.datamodel.SocialMediaPost;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -63,6 +64,8 @@ public class DashboardController {
     public void loadEditAccount(){ loadChildFXML("EditAccount-view.fxml"); }
 
     public void loadDeletePost(){ loadChildFXML("Delete-view.fxml"); }
+    public void loadSort() { loadChildFXML("TopNLikes-view.fxml"); }
+
 
 
     private void loadChildFXML(String fxmlFileName) {
@@ -86,6 +89,11 @@ public class DashboardController {
 
             if (fxmlFileName.equals("Delete-view.fxml")) {
                 DeletePostController controller = loader.getController();
+                controller.setUserName(this.userName);
+            }
+
+            if (fxmlFileName.equals("TopNLikes-view.fxml")) {
+                TopNLikesController controller = loader.getController();
                 controller.setUserName(this.userName);
             }
 
@@ -231,5 +239,6 @@ public class DashboardController {
             System.out.println("No file selected.");
         }
     }
+
 
 }

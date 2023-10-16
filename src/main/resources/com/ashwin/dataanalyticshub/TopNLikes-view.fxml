@@ -8,24 +8,22 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.geometry.Insets?>
 <GridPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:id="retrievePost" alignment="CENTER"
-          fx:controller="com.ashwin.dataanalyticshub.RetrievePostController"
+          fx:controller="com.ashwin.dataanalyticshub.TopNLikesController"
           hgap="10" vgap="10" style="-fx-background-color: #f0f0f0">
     <padding>
         <Insets top="20" bottom="30"/>
     </padding>
-    <Label text="Retrieve Post" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-size: 25px;"/>
-    <Label text="Post Id" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-size: 18px;"/>
-    <HBox GridPane.columnIndex="0" GridPane.rowIndex="2" spacing="12">
-        <TextField fx:id="postId" promptText="Enter Post ID to retrieve"
-                    maxWidth="200" style="-fx-font-size: 17px;"/>
-        <Button onAction="#handleRetrieval" text="Search" style="-fx-font-size: 17px;
-        -fx-background-color: dodgerblue; -fx-text-fill: #FDF0F0;"/>
+    <Label text="Show Top Posts by Likes" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-size: 30px;"/>
+    <Label text="Sort Number" GridPane.columnIndex="0" GridPane.rowIndex="1" style="-fx-font-size: 18px;"/>
+    <HBox GridPane.columnIndex="0" GridPane.rowIndex="2" spacing="12" prefWidth="500">
+        <TextField fx:id="sortNumber" promptText="Number of posts to sort"
+                   maxWidth="350" style="-fx-font-size: 17px;" />
+        <Button onAction="#handleSort" text="Sort" style="-fx-font-size: 17px;
+        -fx-background-color: dodgerblue; -fx-text-fill: #FDF0F0;" prefWidth="100"/>
     </HBox>
     <Label fx:id="userMessage" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="2"
-           style="-fx-font-size: 18px; -fx-text-fill: #a30000"/>
-    <Button GridPane.halignment="RIGHT" fx:id="saveButton" onAction="#handleSave" GridPane.columnIndex="0"
-            GridPane.rowIndex="5" text="Export to .csv" style="-fx-font-size: 17px;
-            -fx-background-color: dodgerblue; -fx-text-fill: #FDF0F0;"/>
+           style="-fx-font-size: 18px; -fx-text-fill: #da0e0e"/>
+
     <TableView fx:id="postTable" prefWidth="1000" GridPane.rowIndex="6">
         <columns>
             <TableColumn text="Post ID" fx:id="idCol"/>

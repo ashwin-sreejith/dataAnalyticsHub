@@ -45,9 +45,9 @@
             -fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #FDF0F0; -fx-cursor: hand"/>
             <Button text="Delete Post -" onAction="#loadDeletePost" style="-fx-font-size: 20;
              -fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #FDF0F0; -fx-cursor: hand"/>
-            <Button text="Retrieve Post" onAction="#loadRetrieval" style="-fx-font-size: 20;
+            <Button text="Search Post" onAction="#loadRetrieval" style="-fx-font-size: 20;
             -fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #FDF0F0; -fx-cursor: hand"/>
-            <Button text="Top N" style="-fx-font-size: 20;
+            <Button text="Sort Posts" onAction="#loadSort" style="-fx-font-size: 20;
             -fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #FDF0F0; -fx-cursor: hand"/>
             <Button fx:id="vipOnly" text="Bulk Import" onAction="#loadPostFromFile" style="-fx-font-size: 20;
             -fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: #FDF0F0; -fx-cursor: hand"/>
