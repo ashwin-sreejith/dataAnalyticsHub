@@ -8,8 +8,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-
-import java.io.IOException;
 import java.util.HashMap;
 
 // Controller for editing Account details
@@ -91,7 +89,7 @@ public class EditAccountController {
                 return;
             }
 
-            Boolean updateSuccessful = DatabaseHandler.updateUsernameAndReferences(this.username, newUserName, newPassword,
+            boolean updateSuccessful = DatabaseHandler.updateUsernameAndReferences(this.username, newUserName, newPassword,
                     firstName, lastName);
 
             if (updateSuccessful) {

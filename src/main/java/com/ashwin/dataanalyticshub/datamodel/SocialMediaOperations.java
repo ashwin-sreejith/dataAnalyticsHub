@@ -60,9 +60,6 @@ public class SocialMediaOperations {
         }
         SocialMediaPost post = DatabaseHandler.retrievePostById(Integer.parseInt(postId), username);
 
-        if(post == null) {
-            return null;
-        }
         return post;
 
     }

@@ -61,7 +61,7 @@ public class FileHandler {
                     SocialMediaPost post = new SocialMediaPost(id, content, author, likes, shares, localDateTime);
                     posts.add(post);
                 } catch (InvalidLineException e){
-                    System.out.println(e);
+                    System.out.println(e.getMessage());
                 }
             }
         } catch (IOException | ArrayIndexOutOfBoundsException | NumberFormatException e) {

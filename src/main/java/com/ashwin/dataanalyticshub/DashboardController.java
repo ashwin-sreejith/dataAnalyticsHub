@@ -76,24 +76,31 @@ public class DashboardController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFileName));
             Node child = loader.load();
 
-            if(fxmlFileName.equals("AllPost-view.fxml")){
-                AllPostController controller = loader.getController();
-                controller.setUserName(this.userName);
-            } else if (fxmlFileName.equals("AddPost-view.fxml")) {
-                AddPostController controller = loader.getController();
-                controller.setUserName(this.userName);
-            } else if (fxmlFileName.equals("EditAccount-view.fxml")) {
-                EditAccountController controller = loader.getController();
-                controller.setUserName(this.userName);
-            } else if (fxmlFileName.equals("RetrievePost-view.fxml")) {
-                RetrievePostController controller = loader.getController();
-                controller.setUserName(this.userName);
-            } else if (fxmlFileName.equals("Delete-view.fxml")) {
-                DeletePostController controller = loader.getController();
-                controller.setUserName(this.userName);
-            } else if(fxmlFileName.equals("TopNLikes-view.fxml")){
-                TopNLikesController controller = loader.getController();
-                controller.setUserName(this.userName);
+            switch (fxmlFileName) {
+                case "AllPost-view.fxml" -> {
+                    AllPostController controller = loader.getController();
+                    controller.setUserName(this.userName);
+                }
+                case "AddPost-view.fxml" -> {
+                    AddPostController controller = loader.getController();
+                    controller.setUserName(this.userName);
+                }
+                case "EditAccount-view.fxml" -> {
+                    EditAccountController controller = loader.getController();
+                    controller.setUserName(this.userName);
+                }
+                case "RetrievePost-view.fxml" -> {
+                    RetrievePostController controller = loader.getController();
+                    controller.setUserName(this.userName);
+                }
+                case "Delete-view.fxml" -> {
+                    DeletePostController controller = loader.getController();
+                    controller.setUserName(this.userName);
+                }
+                case "TopNLikes-view.fxml" -> {
+                    TopNLikesController controller = loader.getController();
+                    controller.setUserName(this.userName);
+                }
             }
 
             // Clear existing content in the VBox

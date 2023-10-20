@@ -36,15 +36,17 @@ public class DatabaseHandler {
     // Authenticates users
     public static boolean authenticateUser(String username, String password) {
         String query = "SELECT * FROM users WHERE username = ? AND password = ?";
-        try (Connection connection = connect();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (Connection connection = connect()) {
+            assert connection != null;
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, password);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+                ResultSet resultSet = preparedStatement.executeQuery();
 
-            return resultSet.next(); // If a row is returned, the authentication is successful
+                return resultSet.next(); // If a row is returned, the authentication is successful
+            }
         } catch (SQLException e) {
             System.err.println("Error during authentication: " + e.getMessage());
             return false;
@@ -86,17 +88,19 @@ public class DatabaseHandler {
 
     // Inserts a user into users table
     public static int insertUser(String firstName, String lastName, String username, String password) {
-        try (Connection connection = connect();
-             PreparedStatement preparedStatement = connection.prepareStatement(
-                     "INSERT INTO users (firstname, lastname, username, password) VALUES (?, ?, ?, ?)")) {
+        try (Connection connection = connect()) {
+            assert connection != null;
+            try (PreparedStatement preparedStatement = connection.prepareStatement(
+                         "INSERT INTO users (firstname, lastname, username, password) VALUES (?, ?, ?, ?)")) {
 
-            preparedStatement.setString(1, firstName);
-            preparedStatement.setString(2, lastName);
-            preparedStatement.setString(3, username);
-            preparedStatement.setString(4, password);
-            preparedStatement.executeUpdate();
-            System.out.println("User registered successfully.");
-            return 200;
+                preparedStatement.setString(1, firstName);
+                preparedStatement.setString(2, lastName);
+                preparedStatement.setString(3, username);
+                preparedStatement.setString(4, password);
+                preparedStatement.executeUpdate();
+                System.out.println("User registered successfully.");
+                return 200;
+            }
         } catch (SQLException e) {
             if (e.getErrorCode() == 19) {
                 System.err.println("Username already exists.");
@@ -143,22 +147,24 @@ public class DatabaseHandler {
     public static SocialMediaPost retrievePostById(int postId, String username) {
         String query = "SELECT * FROM postCollection WHERE id = ? AND userId = ?";
 
-        try (Connection connection = connect();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (Connection connection = connect()) {
+            assert connection != null;
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setInt(1, postId);
-            preparedStatement.setString(2, username);
+                preparedStatement.setInt(1, postId);
+                preparedStatement.setString(2, username);
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    int id = resultSet.getInt("id");
-                    String content = resultSet.getString("content");
-                    int likes = resultSet.getInt("likes");
-                    int shares = resultSet.getInt("shares");
-                    String date = resultSet.getString("date");
-                    LocalDateTime dateTime = Util.localDateTimeFormatFunc(date);
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        int id = resultSet.getInt("id");
+                        String content = resultSet.getString("content");
+                        int likes = resultSet.getInt("likes");
+                        int shares = resultSet.getInt("shares");
+                        String date = resultSet.getString("date");
+                        LocalDateTime dateTime = Util.localDateTimeFormatFunc(date);
 
-                    return new SocialMediaPost(id, content, username, likes, shares, dateTime);
+                        return new SocialMediaPost(id, content, username, likes, shares, dateTime);
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -173,15 +179,17 @@ public class DatabaseHandler {
         String query = "SELECT * FROM users WHERE username=?";
         HashMap<String, String> userDetails= new HashMap<>();
 
-        try (Connection connection = connect();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, username);
+        try (Connection connection = connect()) {
+            assert connection != null;
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, username);
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    userDetails.put("username", resultSet.getString("username"));
-                    userDetails.put("firstname", resultSet.getString("firstname"));
-                    userDetails.put("lastname", resultSet.getString("lastname"));
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        userDetails.put("username", resultSet.getString("username"));
+                        userDetails.put("firstname", resultSet.getString("firstname"));
+                        userDetails.put("lastname", resultSet.getString("lastname"));
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -196,17 +204,19 @@ public class DatabaseHandler {
     public static boolean doesUsernameExist(String username) {
         String query = "SELECT COUNT(*) AS count FROM users WHERE username = ?";
 
-        try (Connection connection = connect();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (Connection connection = connect()) {
+            assert connection != null;
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setString(1, username);
+                preparedStatement.setString(1, username);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                int count = resultSet.getInt("count");
-                return count > 0;
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    int count = resultSet.getInt("count");
+                    return count > 0;
+                }
+
             }
-
         } catch (SQLException e) {
             System.err.println("Error checking username existence: " + e.getMessage());
         }
@@ -257,15 +267,17 @@ public class DatabaseHandler {
         String query = "SELECT vip FROM users WHERE username = ?";
         boolean isVip = false;
 
-        try (Connection connection = connect();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (Connection connection = connect()) {
+            assert connection != null;
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setString(1, username);
+                preparedStatement.setString(1, username);
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    int vipValue = resultSet.getInt("vip");
-                    isVip = vipValue == 1;
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        int vipValue = resultSet.getInt("vip");
+                        isVip = vipValue == 1;
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -279,17 +291,19 @@ public class DatabaseHandler {
     public static void setVipForUser(String username) {
         String query = "UPDATE users SET vip = 1 WHERE username = ?";
 
-        try (Connection connection = connect();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (Connection connection = connect()) {
+            assert connection != null;
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setString(1, username);
+                preparedStatement.setString(1, username);
 
-            int rowsUpdated = preparedStatement.executeUpdate();
+                int rowsUpdated = preparedStatement.executeUpdate();
 
-            if (rowsUpdated > 0) {
-                System.out.println("VIP status updated for user: " + username);
-            } else {
-                System.out.println("User not found or VIP status could not be updated.");
+                if (rowsUpdated > 0) {
+                    System.out.println("VIP status updated for user: " + username);
+                } else {
+                    System.out.println("User not found or VIP status could not be updated.");
+                }
             }
         } catch (SQLException e) {
             System.err.println("Error updating VIP status for user: " + username);
@@ -300,13 +314,15 @@ public class DatabaseHandler {
 
     // Saves the state of retrieved posts for each user
     public static void saveRetrievedPost(String userId, int postId) {
-        try (Connection connection = connect();
-             PreparedStatement preparedStatement = connection.prepareStatement(
-                     "INSERT INTO user_retrieved_posts (userId, postId) VALUES (?, ?)")) {
+        try (Connection connection = connect()) {
+            assert connection != null;
+            try (PreparedStatement preparedStatement = connection.prepareStatement(
+                         "INSERT INTO user_retrieved_posts (userId, postId) VALUES (?, ?)")) {
 
-            preparedStatement.setString(1, userId);
-            preparedStatement.setInt(2, postId);
-            preparedStatement.executeUpdate();
+                preparedStatement.setString(1, userId);
+                preparedStatement.setInt(2, postId);
+                preparedStatement.executeUpdate();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -315,15 +331,17 @@ public class DatabaseHandler {
     // Fetch all post ID's already retrieved by user
     private static List<Integer> getUserRetrievedPostIds(String userId) {
         List<Integer> postIds = new ArrayList<>();
-        try (Connection connection = connect();
-             PreparedStatement preparedStatement = connection.prepareStatement(
-                     "SELECT postId FROM user_retrieved_posts WHERE userId = ?")) {
+        try (Connection connection = connect()) {
+            assert connection != null;
+            try (PreparedStatement preparedStatement = connection.prepareStatement(
+                         "SELECT postId FROM user_retrieved_posts WHERE userId = ?")) {
 
-            preparedStatement.setString(1, userId);
-            ResultSet resultSet = preparedStatement.executeQuery();
+                preparedStatement.setString(1, userId);
+                ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()) {
-                postIds.add(resultSet.getInt("postId"));
+                while (resultSet.next()) {
+                    postIds.add(resultSet.getInt("postId"));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -342,25 +360,28 @@ public class DatabaseHandler {
 
             // Fetch the posts using post IDs
             for (Integer postId : postIds) {
-                try (PreparedStatement preparedStatement = connection.prepareStatement(
-                        "SELECT * FROM postCollection WHERE id = ?")) {
+                try {
+                    assert connection != null;
+                    try (PreparedStatement preparedStatement = connection.prepareStatement(
+                            "SELECT * FROM postCollection WHERE id = ?")) {
 
-                    preparedStatement.setInt(1, postId);
-                    ResultSet resultSet = preparedStatement.executeQuery();
+                        preparedStatement.setInt(1, postId);
+                        ResultSet resultSet = preparedStatement.executeQuery();
 
-                    if (resultSet.next()) {
+                        if (resultSet.next()) {
 
-                        int id = resultSet.getInt("id");
-                        String content = resultSet.getString("content");
-                        String author = resultSet.getString("userId");
-                        int likes = resultSet.getInt("likes");
-                        int shares = resultSet.getInt("shares");
-                        String date = resultSet.getString("date");
-                        LocalDateTime dateTime = Util.localDateTimeFormatFunc(date);
+                            int id = resultSet.getInt("id");
+                            String content = resultSet.getString("content");
+                            String author = resultSet.getString("userId");
+                            int likes = resultSet.getInt("likes");
+                            int shares = resultSet.getInt("shares");
+                            String date = resultSet.getString("date");
+                            LocalDateTime dateTime = Util.localDateTimeFormatFunc(date);
 
-                        // Create a SocialMediaPost object and add to the list
-                        SocialMediaPost post = new SocialMediaPost(id, content, author, likes, shares, dateTime);
-                        posts.add(post);
+                            // Create a SocialMediaPost object and add to the list
+                            SocialMediaPost post = new SocialMediaPost(id, content, author, likes, shares, dateTime);
+                            posts.add(post);
+                        }
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -377,6 +398,7 @@ public class DatabaseHandler {
     public static boolean deletePostById(int postId) {
         try (Connection connection = connect()) {
             String query = "DELETE FROM postCollection WHERE id = ?";
+            assert connection != null;
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setInt(1, postId);
                 int rowsAffected = preparedStatement.executeUpdate();
@@ -398,14 +420,16 @@ public class DatabaseHandler {
     // Delete a post from retrieved posts
     private static void deletePostEntryInRetrieved(int postId) {
         String query = "DELETE FROM user_retrieved_posts WHERE postId = ?";
-        try (Connection connection = connect();
-                PreparedStatement deleteUserRetrievedStatement = connection.prepareStatement(query)) {
-            deleteUserRetrievedStatement.setInt(1, postId);
-            int userRetrievedDeleted = deleteUserRetrievedStatement.executeUpdate();
-            if (userRetrievedDeleted > 0) {
-                System.out.println("Entry for post ID " + postId + " deleted from user_retrieved_posts table.");
-            } else {
-                System.out.println("No entry found for post ID " + postId + " in user_retrieved_posts table.");
+        try (Connection connection = connect()) {
+            assert connection != null;
+            try (PreparedStatement deleteUserRetrievedStatement = connection.prepareStatement(query)) {
+                deleteUserRetrievedStatement.setInt(1, postId);
+                int userRetrievedDeleted = deleteUserRetrievedStatement.executeUpdate();
+                if (userRetrievedDeleted > 0) {
+                    System.out.println("Entry for post ID " + postId + " deleted from user_retrieved_posts table.");
+                } else {
+                    System.out.println("No entry found for post ID " + postId + " in user_retrieved_posts table.");
+                }
             }
         } catch (SQLException e) {
             System.err.println("Error deleting post: " + e.getMessage());
@@ -417,6 +441,7 @@ public class DatabaseHandler {
         List<SocialMediaPost> topPosts = new ArrayList<>();
         try (Connection connection = connect()) {
             String query = "SELECT * FROM postCollection WHERE userId = ? ORDER BY likes DESC LIMIT ?";
+            assert connection != null;
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setString(1, userId);
                 statement.setInt(2, n);
@@ -447,6 +472,7 @@ public class DatabaseHandler {
 
         try (Connection connection = connect()) {
             String query = "SELECT COUNT(*) AS postCount FROM postCollection WHERE userId = ?";
+            assert connection != null;
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setString(1, username);
                 ResultSet resultSet = statement.executeQuery();
@@ -468,6 +494,7 @@ public class DatabaseHandler {
 
         try (Connection connection = connect()) {
             String query = "SELECT * FROM postCollection WHERE userId = ?";
+            assert connection != null;
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setString(1, username);
                 ResultSet resultSet = statement.executeQuery();
