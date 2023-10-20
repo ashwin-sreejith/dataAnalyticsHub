@@ -3,6 +3,7 @@ package com.ashwin.dataanalyticshub.datamodel;
 import com.ashwin.dataanalyticshub.customexceptions.*;
 import com.ashwin.dataanalyticshub.database.DatabaseHandler;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,25 +11,10 @@ import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Tests social media operations
 class SocialMediaOperationsTest {
-    private SocialMediaOperations socialMediaOperations;
-    @BeforeEach
-    void setUp() {
-        socialMediaOperations = SocialMediaOperations.getInstance();
-    }
 
-    @AfterEach
-    void tearDown() {
-    }
-
-    @Test
-    void getInstance() {
-    }
-
-    @Test
-    void retrievePost() {
-    }
-
+    // Runs validator with correct data
     @Test
     void validator() {
         SocialMediaOperations socialMediaOperations = SocialMediaOperations.getInstance();
@@ -44,6 +30,7 @@ class SocialMediaOperationsTest {
         assertDoesNotThrow(() -> socialMediaOperations.validator(postDetails));
     }
 
+    // tests for error in ID
     @Test
     void validatorErrorId() {
         SocialMediaOperations socialMediaOperations = SocialMediaOperations.getInstance();
@@ -59,6 +46,7 @@ class SocialMediaOperationsTest {
         assertThrows(InvalidPostIdException.class, () -> socialMediaOperations.validator(postDetails));
     }
 
+    // tests for error in content
     @Test
     void validatorErrorContent() {
         SocialMediaOperations socialMediaOperations = SocialMediaOperations.getInstance();
@@ -74,6 +62,7 @@ class SocialMediaOperationsTest {
         assertThrows(InvalidContentException.class, () -> socialMediaOperations.validator(postDetails));
     }
 
+    // tests for error in likes
     @Test
     void validatorErrorLikes() {
         SocialMediaOperations socialMediaOperations = SocialMediaOperations.getInstance();
@@ -89,6 +78,7 @@ class SocialMediaOperationsTest {
         assertThrows(InvalidLikesException.class, () -> socialMediaOperations.validator(postDetails));
     }
 
+    // tests for error in shares
     @Test
     void validatorErrorShares() {
         SocialMediaOperations socialMediaOperations = SocialMediaOperations.getInstance();
@@ -104,6 +94,7 @@ class SocialMediaOperationsTest {
         assertThrows(InvalidSharesException.class, () -> socialMediaOperations.validator(postDetails));
     }
 
+    // tests for error in datetime
     @Test
     void validatorErrorDateTime() {
         SocialMediaOperations socialMediaOperations = SocialMediaOperations.getInstance();

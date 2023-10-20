@@ -11,15 +11,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.collections.ObservableList;
 import javafx.stage.FileChooser;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
+// Controller for retrieving posts
 public class RetrievePostController {
     @FXML
     public GridPane retrievePost;
@@ -49,6 +48,7 @@ public class RetrievePostController {
 
 
 
+    // initialise table
     @FXML
     public void initialize() {
 
@@ -68,8 +68,11 @@ public class RetrievePostController {
 
 
     }
+
+    // handles retrieving posts
     public void handleRetrieval() {
         SocialMediaOperations operations = SocialMediaOperations.getInstance();
+        // validates post ID
         if (!Util.isValidInteger(postId.getText(), false)) {
             System.out.println(postId.getText());
             userMessage.setText("Post ID has to be a non-zero Integer");
@@ -89,6 +92,7 @@ public class RetrievePostController {
         }
     }
 
+    // sets current user and loads existing analyzed posts
     public void setUserName(String username) {
 
         this.username = username;
@@ -109,8 +113,10 @@ public class RetrievePostController {
         exportToCSV();
     }
 
+    // exports current posts to csv
     private void exportToCSV() {
         FileChooser fileChooser = new FileChooser();
+        // sets an initial file name
         fileChooser.setInitialFileName("retrievedPost.csv");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
 

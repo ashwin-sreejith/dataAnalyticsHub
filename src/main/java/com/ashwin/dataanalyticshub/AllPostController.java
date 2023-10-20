@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// Controller for welcome page for user with all posts of user
 public class AllPostController {
 
     @FXML
@@ -38,6 +39,8 @@ public class AllPostController {
 
     private List<SocialMediaPost> allPosts;
     ObservableList<SocialMediaPost> postsList = FXCollections.observableArrayList();
+
+    // Loads on initialization
     @FXML
     public void initialize() {
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -59,6 +62,7 @@ public class AllPostController {
 
     }
 
+    // sets current user and loads data to table and pie chart
     public void setUserName(String username) {
         this.userName = username;
         boolean isVip = DatabaseHandler.isVip(this.userName);
@@ -71,6 +75,7 @@ public class AllPostController {
         pieChart.setData(pieChartData);
     }
 
+    // fetches all posts of current user
     private void fetchAllPosts(String username) {
         this.allPosts = DatabaseHandler.getAllPostsByUser(username);
         if (this.allPosts.isEmpty()) {
@@ -84,6 +89,7 @@ public class AllPostController {
         postTable.setItems(postsList);
     }
 
+    // generates pie chart
     public ObservableList<PieChart.Data> generatePieChartData() {
 
         // Create a HashMap to store category counts

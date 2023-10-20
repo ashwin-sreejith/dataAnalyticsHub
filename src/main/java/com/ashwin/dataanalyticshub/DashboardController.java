@@ -15,10 +15,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.*;
 import java.io.File;
-
 import java.io.IOException;
 import java.util.List;
 
+// Controller for Dashboard
 public class DashboardController {
     @FXML
     public VBox dynamicWindow;
@@ -70,6 +70,7 @@ public class DashboardController {
     public void loadSort() { loadChildFXML("TopNLikes-view.fxml"); }
 
 
+    // loads the provided fxml file onto the dynamic window
     private void loadChildFXML(String fxmlFileName) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFileName));
@@ -78,29 +79,19 @@ public class DashboardController {
             if(fxmlFileName.equals("AllPost-view.fxml")){
                 AllPostController controller = loader.getController();
                 controller.setUserName(this.userName);
-            }
-
-            if(fxmlFileName.equals("AddPost-view.fxml")){
+            } else if (fxmlFileName.equals("AddPost-view.fxml")) {
                 AddPostController controller = loader.getController();
                 controller.setUserName(this.userName);
-            }
-
-            if (fxmlFileName.equals("EditAccount-view.fxml")) {
+            } else if (fxmlFileName.equals("EditAccount-view.fxml")) {
                 EditAccountController controller = loader.getController();
                 controller.setUserName(this.userName);
-            }
-
-            if (fxmlFileName.equals("RetrievePost-view.fxml")) {
+            } else if (fxmlFileName.equals("RetrievePost-view.fxml")) {
                 RetrievePostController controller = loader.getController();
                 controller.setUserName(this.userName);
-            }
-
-            if (fxmlFileName.equals("Delete-view.fxml")) {
+            } else if (fxmlFileName.equals("Delete-view.fxml")) {
                 DeletePostController controller = loader.getController();
                 controller.setUserName(this.userName);
-            }
-
-            if (fxmlFileName.equals("TopNLikes-view.fxml")) {
+            } else if(fxmlFileName.equals("TopNLikes-view.fxml")){
                 TopNLikesController controller = loader.getController();
                 controller.setUserName(this.userName);
             }
@@ -114,9 +105,12 @@ public class DashboardController {
         }
     }
 
+    // Handles logout
     public void logout() {
         loadLoginView();
     }
+
+    // Loads login view
     private void loadLoginView() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Login-view.fxml"));
@@ -132,6 +126,7 @@ public class DashboardController {
         }
     }
 
+    // function to convert Header to title case
     private StringBuilder titleCase(String fullName) {
         boolean capitalise = true;
         StringBuilder s = new StringBuilder();
@@ -154,13 +149,16 @@ public class DashboardController {
         return s;
     }
 
+    // Loads dialog for VIP
     public void handleVip() {
         vipDialogPopup();
     }
 
+    // Setup for VIP dialog
     private void vipDialogPopup() {
         // Create a Stage for the popup
         Stage popupStage = new Stage();
+        // set popup to be a MODAL
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.initStyle(StageStyle.UNIFIED);
         popupStage.setTitle("Join VIP");
@@ -179,11 +177,14 @@ public class DashboardController {
         proceedButton.setStyle("-fx-background-color: #05c005; -fx-text-fill: #FDF0F0; -fx-cursor: hand; -fx-font-size: 17px");
         closeButton.setStyle("-fx-background-color: #b90808; -fx-text-fill: #FDF0F0; -fx-cursor: hand; -fx-font-size: 17px");
 
+        // handles click event for close button
         closeButton.setOnAction(event -> {
             if (closeButton.getText().equals("Logout"))
                 logout();
             popupStage.close();
         });
+
+        // handles click event for proceed button
         proceedButton.setOnAction(event -> {
             label.setText("Please log out and log in again to access VIP functionalities.");
             setVip(this.userName);
@@ -199,6 +200,8 @@ public class DashboardController {
         popupStage.setScene(popupScene);
 
         Window currentWindow = vipButton.getScene().getWindow();
+
+        // position the popup on top of current active window
         double windowWidth = currentWindow.getWidth();
         double windowHeight = currentWindow.getHeight();
         double xCord = currentWindow.getX() + (windowWidth - popupContainer.prefWidth(-1) - 300) / 2;
@@ -209,6 +212,7 @@ public class DashboardController {
         popupStage.showAndWait();
     }
 
+    // display toggles for VIP
     public void vipToggle(boolean isVip) {
         if (isVip) {
             vipSubscription.setVisible(false);
@@ -218,16 +222,18 @@ public class DashboardController {
         }
     }
 
+    // sets user as VIP
     public void setVip(String username) {
         DatabaseHandler.setVipForUser(username);
     }
 
+    // handles bulk import for VIP users
     public void loadPostFromFile() {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select a File");
 
-        // Set extension filters if needed (optional)
+        // Set extension filters
         FileChooser.ExtensionFilter extFilter =
                 new FileChooser.ExtensionFilter("CSV Files (*.csv)", "*.csv");
         fileChooser.getExtensionFilters().add(extFilter);

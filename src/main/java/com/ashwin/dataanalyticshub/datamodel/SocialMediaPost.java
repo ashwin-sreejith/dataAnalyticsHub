@@ -1,8 +1,8 @@
 package com.ashwin.dataanalyticshub.datamodel;
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 // handles basic structure of a post
+// DATAMODEL
 public class SocialMediaPost {
     private final int id;
     private final String content;

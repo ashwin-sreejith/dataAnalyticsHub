@@ -1,28 +1,20 @@
 package com.ashwin.dataanalyticshub;
 
 import com.ashwin.dataanalyticshub.database.DatabaseHandler;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
-
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Objects;
 
+// Controller for Login and Signup
 public class LoginController {
     @FXML
     public Label loginStatusLabel;
@@ -37,6 +29,7 @@ public class LoginController {
     @FXML
     private PasswordField passwordField;
 
+    // Switch views based on login or signup
     private void loadFXML(String fxmlPath) {
         try {
 
@@ -53,7 +46,7 @@ public class LoginController {
             }
             Scene scene = new Scene(root, width, height);
             System.out.println(userNameField.getText());
-            Stage stage = (Stage) ((Node) userNameField).getScene().getWindow();
+            Stage stage = (Stage) userNameField.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Data Analytics Hub");
             stage.show();
@@ -62,6 +55,7 @@ public class LoginController {
         }
     }
 
+    // authenticates and logs user in
     public void handleLogin() {
 
         String username = userNameField.getText().strip().toLowerCase();
@@ -83,6 +77,7 @@ public class LoginController {
         }
     }
 
+    // handles signup
     public void handleSignup() {
 
         String firstName = firstNameField.getText().strip().toLowerCase();
@@ -90,6 +85,7 @@ public class LoginController {
         String username = userNameField.getText().strip().toLowerCase();
         String password = passwordField.getText();
 
+        // validation for signup fields
         if (firstName.isBlank()) {
             loginStatusLabel.setTextFill(Color.RED);
             loginStatusLabel.setText("First Name cannot be empty");

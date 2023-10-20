@@ -1,17 +1,17 @@
 package com.ashwin.dataanalyticshub.database;
-
 import com.ashwin.dataanalyticshub.datamodel.SocialMediaPost;
 import com.ashwin.dataanalyticshub.datamodel.Util;
-
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+// Handles all database related operations
 public class DatabaseHandler {
     private static final String DATABASE_URL = "jdbc:sqlite:database/dataHub.db";
 
+    // Connect to database
     public static Connection connect() {
         try {
 
@@ -22,6 +22,7 @@ public class DatabaseHandler {
         }
     }
 
+    // Disconnect an established connection
     public static void disconnect(Connection connection) {
         try {
             if (connection != null && !connection.isClosed()) {
@@ -32,6 +33,7 @@ public class DatabaseHandler {
         }
     }
 
+    // Authenticates users
     public static boolean authenticateUser(String username, String password) {
         String query = "SELECT * FROM users WHERE username = ? AND password = ?";
         try (Connection connection = connect();
@@ -49,6 +51,7 @@ public class DatabaseHandler {
         }
     }
 
+    // Inserts a post into postCollection table
     public static int insertPost(SocialMediaPost post) {
         String insertSQL = "INSERT INTO postCollection (id, content, userId, likes, shares, date) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -81,6 +84,7 @@ public class DatabaseHandler {
         return -1;
     }
 
+    // Inserts a user into users table
     public static int insertUser(String firstName, String lastName, String username, String password) {
         try (Connection connection = connect();
              PreparedStatement preparedStatement = connection.prepareStatement(
@@ -104,6 +108,7 @@ public class DatabaseHandler {
         return -1;
     }
 
+    // Returns fullname of user based on provided username
     public static String getFullNameByUsername(String username) {
         String fullName = null;
         Connection connection = connect();
@@ -134,6 +139,7 @@ public class DatabaseHandler {
     }
 
 
+    // Retrieves a post using PostID
     public static SocialMediaPost retrievePostById(int postId, String username) {
         String query = "SELECT * FROM postCollection WHERE id = ? AND userId = ?";
 
@@ -162,6 +168,7 @@ public class DatabaseHandler {
         return null;
     }
 
+    // Fetch account details based username
     public static HashMap<String, String> fetchAccountDetails(String username) {
         String query = "SELECT * FROM users WHERE username=?";
         HashMap<String, String> userDetails= new HashMap<>();
@@ -185,6 +192,7 @@ public class DatabaseHandler {
 
     }
 
+    // Checks if username exists in users table
     public static boolean doesUsernameExist(String username) {
         String query = "SELECT COUNT(*) AS count FROM users WHERE username = ?";
 
@@ -205,6 +213,7 @@ public class DatabaseHandler {
         return false;
     }
 
+    // Updates username and all references of that user in other tables
     public static boolean updateUsernameAndReferences(String oldUsername, String newUsername, String password, String firstname, String lastname) {
         String updateUsersQuery = "UPDATE users SET username = ?, firstname = ?, lastname = ?, password = ? WHERE username = ?";
         String updatePostCollectionQuery = "UPDATE postCollection SET userId = ? WHERE userId = ?";
@@ -243,6 +252,7 @@ public class DatabaseHandler {
         return false;
     }
 
+    // Returns VIP status of user
     public static boolean isVip(String username) {
         String query = "SELECT vip FROM users WHERE username = ?";
         boolean isVip = false;
@@ -265,6 +275,7 @@ public class DatabaseHandler {
         return isVip;
     }
 
+    // Set a given user as VIP
     public static void setVipForUser(String username) {
         String query = "UPDATE users SET vip = 1 WHERE username = ?";
 
@@ -287,6 +298,7 @@ public class DatabaseHandler {
 
     }
 
+    // Saves the state of retrieved posts for each user
     public static void saveRetrievedPost(String userId, int postId) {
         try (Connection connection = connect();
              PreparedStatement preparedStatement = connection.prepareStatement(
@@ -300,6 +312,7 @@ public class DatabaseHandler {
         }
     }
 
+    // Fetch all post ID's already retrieved by user
     private static List<Integer> getUserRetrievedPostIds(String userId) {
         List<Integer> postIds = new ArrayList<>();
         try (Connection connection = connect();
@@ -319,6 +332,7 @@ public class DatabaseHandler {
         return postIds;
     }
 
+    // Fetch all the posts retrieved by user
     public static List<SocialMediaPost> getPostsForUser(String userId) {
         List<SocialMediaPost> posts = new ArrayList<>();
 
@@ -335,7 +349,7 @@ public class DatabaseHandler {
                     ResultSet resultSet = preparedStatement.executeQuery();
 
                     if (resultSet.next()) {
-                        // Extract post details
+
                         int id = resultSet.getInt("id");
                         String content = resultSet.getString("content");
                         String author = resultSet.getString("userId");
@@ -359,6 +373,7 @@ public class DatabaseHandler {
         return posts;
     }
 
+    // Delete a post from table using its ID
     public static boolean deletePostById(int postId) {
         try (Connection connection = connect()) {
             String query = "DELETE FROM postCollection WHERE id = ?";
@@ -380,6 +395,7 @@ public class DatabaseHandler {
         return false;
     }
 
+    // Delete a post from retrieved posts
     private static void deletePostEntryInRetrieved(int postId) {
         String query = "DELETE FROM user_retrieved_posts WHERE postId = ?";
         try (Connection connection = connect();
@@ -396,6 +412,7 @@ public class DatabaseHandler {
         }
     }
 
+    // Retrieve the top N posts of a user based on the likes
     public static List<SocialMediaPost> getTopNPostsByUser(int n, String userId) {
         List<SocialMediaPost> topPosts = new ArrayList<>();
         try (Connection connection = connect()) {
@@ -424,6 +441,7 @@ public class DatabaseHandler {
         return topPosts;
     }
 
+    // Get the number of posts made by user
     public static int getPostCountForUser(String username) {
         int postCount = 0;
 
@@ -444,6 +462,7 @@ public class DatabaseHandler {
         return postCount;
     }
 
+    // Retrieve all posts made by user
     public static List<SocialMediaPost> getAllPostsByUser(String username) {
         List<SocialMediaPost> userPosts = new ArrayList<>();
 

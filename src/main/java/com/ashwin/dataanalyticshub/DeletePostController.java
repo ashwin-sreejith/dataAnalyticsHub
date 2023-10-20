@@ -4,7 +4,6 @@ import com.ashwin.dataanalyticshub.database.DatabaseHandler;
 import com.ashwin.dataanalyticshub.datamodel.SocialMediaOperations;
 import com.ashwin.dataanalyticshub.datamodel.SocialMediaPost;
 import com.ashwin.dataanalyticshub.datamodel.Util;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
+// Controller for deleting posts
 public class DeletePostController {
 
     public Label userMessage;
@@ -30,9 +30,12 @@ public class DeletePostController {
         confirmationBox.setManaged(false);
     }
 
+    // set current user
     public void setUserName(String username) {
         this.userName = username;
     }
+
+    // handles confirmation before deleting posts
     public void handleDelete() {
         userMessage.setTextFill(Color.RED);
         if (!Util.isValidInteger(postIdField.getText(), false)) {
@@ -56,6 +59,7 @@ public class DeletePostController {
 
     }
 
+    // handles deleting posts
     public void deletePost() {
         boolean success = DatabaseHandler.deletePostById(Integer.parseInt(postIdField.getText()));
         if (success) {
@@ -65,6 +69,7 @@ public class DeletePostController {
         }
     }
 
+    // handles click event for cancel button
     public void cancelDelete() {
         confirmationBox.setVisible(false);
         confirmationBox.setManaged(false);

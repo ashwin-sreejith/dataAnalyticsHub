@@ -1,27 +1,18 @@
 package com.ashwin.dataanalyticshub;
 
 import com.ashwin.dataanalyticshub.database.DatabaseHandler;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.HashMap;
-import java.util.ResourceBundle;
 
+// Controller for editing Account details
 public class EditAccountController {
     @FXML
     public TextField firstNameField;
@@ -54,11 +45,13 @@ public class EditAccountController {
         editAccountForm.setManaged(false);
     }
 
+    // set current user
     public void setUserName(String username) {
         this.username = username;
         fetchCurrentUserDetails(this.username);
     }
 
+    // fetch details of current user
     public void fetchCurrentUserDetails(String username) {
         if (username != null && !username.isEmpty()) {
             userDetails = DatabaseHandler.fetchAccountDetails(username);
@@ -67,13 +60,14 @@ public class EditAccountController {
         }
     }
 
-    public void handleEdit() throws IOException {
+    // Handles editing the account
+    public void handleEdit() {
         String firstName = firstNameField.getText();
         String lastName = lastNameField.getText();
         String newUserName = newUserNameField.getText();
         String newPassword = newPasswordField.getText();
 
-
+        // validation for input fields
         if (firstName.isBlank()) {
             editStatusLabel.setTextFill(Color.RED);
             editStatusLabel.setText("FirstName cannot be empty");
@@ -115,6 +109,7 @@ public class EditAccountController {
     }
 
 
+    // handles authentication before editing
     public void handleValidate() {
         String userName = userNameField.getText();
         String password = passwordField.getText();

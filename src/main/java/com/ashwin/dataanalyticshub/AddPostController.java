@@ -10,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import java.util.HashMap;
 
+// Controller for adding a new post to collection
 public class AddPostController {
     @FXML
     public GridPane addPostForm;
@@ -34,10 +35,12 @@ public class AddPostController {
 
     private final HashMap<String, String> postDetails = new HashMap<>();
 
+    // sets current user
     public void setUserName(String name) {
         this.userName = name;
     }
 
+    // Adds a post to database
     public void handleAddPost() {
 
         SocialMediaOperations operations = SocialMediaOperations.getInstance();

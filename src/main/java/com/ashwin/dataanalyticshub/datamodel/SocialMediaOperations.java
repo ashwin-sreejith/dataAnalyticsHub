@@ -4,13 +4,14 @@ import com.ashwin.dataanalyticshub.database.DatabaseHandler;
 import java.time.LocalDateTime;
 import java.util.*;
 
-// handles all operations that can be performed using posts
+// handles operations that can be performed using posts
 public class SocialMediaOperations {
 
     private static SocialMediaOperations instance;
 
     private SocialMediaOperations() {}
 
+    // Returns SINGLETON instance of the class
     public static synchronized SocialMediaOperations getInstance() {
         if (instance == null) {
             instance = new SocialMediaOperations();
@@ -21,6 +22,7 @@ public class SocialMediaOperations {
     // adds new posts to the collection
     public String addNewPost(HashMap<String, String> postDetails) {
 
+        // Validates the post details
         try {
             String validation = validator(postDetails);
         } catch (InvalidPostIdException | InvalidAuthorException | InvalidContentException | InvalidDateTimeException |
@@ -39,6 +41,7 @@ public class SocialMediaOperations {
         LocalDateTime date = Util.localDateTimeFormatFunc(formattedDateTime);
         SocialMediaPost newPost = new SocialMediaPost(postId, content, author, likes, shares, date);
         int errorCode = DatabaseHandler.insertPost(newPost);
+        // If 19, post already exists in DB
         if(errorCode == 19) {
             return "Post Id Already Exists!";
         } else if (errorCode == -1) {
@@ -64,6 +67,7 @@ public class SocialMediaOperations {
 
     }
 
+    // Validation for post data. Uses functions in Util class
     public String validator(HashMap<String, String> postDetails) throws InvalidPostIdException, InvalidAuthorException,
             InvalidContentException, InvalidDateTimeException, InvalidSharesException, InvalidLikesException {
 

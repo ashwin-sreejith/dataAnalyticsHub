@@ -1,16 +1,12 @@
 package com.ashwin.dataanalyticshub;
-
-import com.ashwin.dataanalyticshub.database.DatabaseHandler;
-import com.ashwin.dataanalyticshub.datamodel.FileHandler;
-import com.ashwin.dataanalyticshub.datamodel.SocialMediaPost;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.List;
 
+// Main
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {

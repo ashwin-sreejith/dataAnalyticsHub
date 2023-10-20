@@ -1,5 +1,4 @@
 package com.ashwin.dataanalyticshub;
-
 import com.ashwin.dataanalyticshub.database.DatabaseHandler;
 import com.ashwin.dataanalyticshub.datamodel.SocialMediaPost;
 import com.ashwin.dataanalyticshub.datamodel.Util;
@@ -12,7 +11,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -40,6 +38,7 @@ public class TopNLikesController {
     private final ObservableList<SocialMediaPost> postsList = FXCollections.observableArrayList();
     private String userName;
 
+    // loads table
     @FXML
     public void initialize() {
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -57,10 +56,12 @@ public class TopNLikesController {
         datesCol.setPrefWidth(200);
     }
 
+    // sets current user
     public void setUserName(String username) {
         this.userName = username;
     }
 
+    // retrieves posts of current user sorted by likes
     public void handleSort() {
         userMessage.setTextFill(Color.RED);
         if (!Util.isValidInteger(sortNumber.getText(), false)) {
