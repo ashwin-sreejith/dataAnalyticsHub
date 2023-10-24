@@ -58,30 +58,33 @@ public class AllPostController {
         datesCol.setPrefWidth(200);
 
         pieChart.setVisible(false);
-        pieChart.setManaged(false);
+
 
     }
 
     // sets current user and loads data to table and pie chart
     public void setUserName(String username) {
+        pieChart.setManaged(false);
         this.userName = username;
         boolean isVip = DatabaseHandler.isVip(this.userName);
+        System.out.println(isVip);
         if (isVip) {
             pieChart.setVisible(true);
             pieChart.setManaged(true);
+
         }
-        fetchAllPosts(this.userName);
+        fetchAllPosts(this.userName, isVip);
         ObservableList<PieChart.Data> pieChartData = generatePieChartData();
         pieChart.setData(pieChartData);
     }
 
     // fetches all posts of current user
-    private void fetchAllPosts(String username) {
+    private void fetchAllPosts(String username, boolean isVip) {
         this.allPosts = DatabaseHandler.getAllPostsByUser(username);
         if (this.allPosts.isEmpty()) {
             pieChart.setVisible(false);
             pieChart.setManaged(false);
-        } else {
+        } else if (isVip) {
             pieChart.setManaged(true);
             pieChart.setVisible(true);
         }
